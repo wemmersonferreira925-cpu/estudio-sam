@@ -110,14 +110,31 @@ mesma pose por 20–40 s, sempre sorrindo). O v6 mantém a pintura A5 e tira o S
   `carimbo` (txt, sub, pos, rot), `calendario` (de, ate, tA, tB, mes, rodape), `review` (estrelas,
   frases, nome, sub, app), `placa` (txt, seta), `raios`. Todos aceitam `pv` = posição no 9:16.
 
-## 5. Catálogo validado (nomes fixos — o studio avisa se usar outro)
-- **Poses:** idle, neutro, apontar, apontar_lado, apontar_esq, apontar_cima, dar_de_ombros,
+## 5. Catálogo validado (nomes fixos — o studio avisa se usar outro) — v6.1
+- **Poses (20):** idle, neutro, apontar, apontar_lado, apontar_esq, apontar_cima, dar_de_ombros,
   maos_ao_alto, susto, comemorar, rezar, reverencia, segurar_mapa, maos_na_cintura, reivindicar,
-  acenar, segurar_lanca.
-- **Expressões:** deadpan (padrão), serio, neutro, falando, cetico, sorriso, orgulhoso, surpreso,
+  acenar, segurar_lanca, erguer (braço direito para cima, ex.: espada), segurar (duas mãos à frente),
+  assinar (mão no peito, ex.: pena).
+- **Expressões (12):** deadpan (padrão), serio, neutro, falando, cetico, sorriso, orgulhoso, surpreso,
   assustado, feliz, olhos_fechados, irritado.
-- **Figurinos prontos:** eua (abertura/voto), capitao (explorador), padrao.
-  Novo figurino = função `torso` (+ `hat`) em `COSTUMES` no motor; seguir a paleta da era.
+- **Figurinos (19):** eua (abertura/voto), capitao (explorador/Cabral), colono (colono, lenhador,
+  cafeicultor — chapéu de palha), tupi (indígena: cocar de penas, pintura corporal, saia de fibra),
+  frances (marinheiro francês), nobre (donatário/autoridade: gola de rufo, capa preta, chapéu com
+  pluma), garimpeiro, rei (coroa + manto vermelho com arminho), imperador (coroa + manto verde de
+  penas), uniforme_imperial (Pedro I em Ipiranga: farda azul, dragonas, faixa verde-amarela, bicorne),
+  pedro_ii (barba branca, sobrecasaca preta), princesa (vestido azul, tiara, colar de pérolas),
+  militar (farda 1889, quepe), presidente (terno e gravata), presidente_fedora (terno + chapéu),
+  jogador (camisa amarela "10", short azul), carnaval (cocar de penas gigante, colete de lantejoulas),
+  turista (camiseta azul, hoje), padrao.
+  Galeria: botão "Ver galeria de figurinos no palco" no studio, ou `galeria-figurinos.jpg`.
+- **Objetos de cena (`prop`):** com as duas mãos: mapa, bateia (ouro), taca (troféu), livro, planta
+  (projeto de cidade); numa mão (direita; `propMao: "L"` para a esquerda): espada, cetro, machado,
+  pena, microfone, bola. Ex.: `{"t": 12.0, "pose": "erguer", "prop": "espada"}`; tirar: `"prop": null`.
+- **Camadas de um figurino novo** (em `COSTUMES` no sam-engine.js): `back` (capa), `lower` (saia,
+  vestido, short), `torso`, `front` (gola, colar, faixa), `hatBack` (penas atrás da cabeça), `face`
+  (barba/bigode), `hat` (chapéu/coroa), `sleeve` (cor da manga), `boot` (calçado).
+- **Regra de respeito:** o Sam não interpreta pessoas escravizadas nem vítimas de tragédias; nessas
+  cenas a pintura fica sozinha (ou o Sam aparece sério como narrador), sem gag.
 - **SFX:** whoosh, whoosh_leve, zip, bonk, pop, tick, ding, tink, blip, thud, clank, coro, grilos, passo.
 
 ## 6. Prompt das pinturas A5 SEM o Sam (colar em toda cena)
@@ -141,8 +158,8 @@ marco do lugar no terço central, paleta da era repetida no episódio.
   lenta, sem SFX cômico.
 - Final de todo episódio: o Sam olha para a câmera (deadpan) + voto de 3 opções.
 
-## 8. Próximas melhorias do studio (v6.1+)
+## 8. Próximas melhorias do studio (v6.2+)
 - Figurante animado (2º boneco com figurino) para diálogos/cabo de guerra.
-- Mais figurinos prontos (rei, soldado romano, faraó, cowboy, samurai, princesa, presidente).
-- Biblioteca de props (espada, coroa, pergaminho, xícara de café, bola).
+- Figurinos de outros temas (soldado romano, faraó, cowboy, samurai...): adicionar quando o tema for escolhido.
+- Mais objetos (pergaminho, xícara de café, tocha).
 - Mapa com mais regiões (Europa detalhada, Ásia oriental, EUA por estados).
