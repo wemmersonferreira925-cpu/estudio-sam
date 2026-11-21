@@ -31,6 +31,31 @@ const FONT_SUB = '"DejaVu Sans", Verdana, "Segoe UI", Arial, sans-serif';
 const FONT_DISPLAY = '"Archivo Black", "Arial Black", Impact, sans-serif';
 const FONT_STAMP = 'Anton, Impact, "Arial Black", sans-serif';
 const YELLOW = '#FFD21F', INK = '#111111';
+/* 9:16 (TikTok, Reels, Shorts): a interface do app cobre o topo (abas), a base (legenda do post, @, som) e a
+   coluna de botões à direita. Tudo que é texto ou gag fica dentro desta caixa. */
+const SAFE_V = { x0: 72, x1: 948, y0: 262, y1: 1400, topo: 262 };
+const OCC = []; // 9:16: caixas já ocupadas no quadro atual (data, nome, mapa, gancho e gags já colocados)
+function fitV(L, p, hw, hh, hb) { // empurra o centro p para a caixa (meia-largura hw, meia-altura hh/hb) caber na zona segura
+  if (!L.v) return p; const b = SAFE_V, bot = hb === undefined ? hh : hb;
+  const f = (lo, hi, v) => (lo > hi ? (lo + hi) / 2 : clamp(v, lo, hi));
+  return [f(b.x0 + hw, b.x1 - hw, p[0]), f(b.y0 + hh, b.y1 - bot, p[1])];
+}
+function placeV(L, p, hw, hh, hb) { // como fitV, e ainda desvia das caixas já ocupadas (desce; se não couber, sobe)
+  if (!L.v) return p; const bot = hb === undefined ? hh : hb;
+  let q = fitV(L, p, hw, hh, bot);
+  const hit = c => OCC.find(b => c[0] - hw < b[2] && c[0] + hw > b[0] && c[1] - hh < b[3] && c[1] + bot > b[1]);
+  for (let n = 0; n < 6; n++) {
+    const b = hit(q); if (!b) break;
+    const down = [q[0], b[3] + hh + 12], up = [q[0], b[1] - bot - 12];
+    if (down[1] + bot <= SAFE_V.y1) q = down; else if (up[1] - hh >= SAFE_V.topo) q = up; else break;
+  }
+  OCC.push([q[0] - hw, q[1] - hh, q[0] + hw, q[1] + bot]);
+  return q;
+}
+function posV(L, ev, def) { // posição do overlay: "pos" no 16:9; "pv" no 9:16 (sem pv, converte a do 16:9)
+  const p = ev.pos || def || [960, 400]; if (!L.v) return p; if (ev.pv) return ev.pv;
+  return [p[0] / 1920 * L.W, SAFE_V.y0 + p[1] / 1080 * (SAFE_V.y1 - SAFE_V.y0)];
+}
 
 /* ---------------- RIG DO SAM (unidades a escala 1 ≈ 470 px de altura) ---------------- */
 const RIG = { headR: 80, neckW: 30, neckH: 18, torsoTop: -292, torsoBot: -142, torsoTopW: 112, torsoBotW: 126,
@@ -904,7 +929,7 @@ function samState(sam, t, mouthAt) {
       }
     } else if (a.tipo === 'espiar' && t >= a.t0 && t <= a.t1) {
       const kin = Ease.back(inv(a.t0, a.t0 + 0.2, t)), kout = Ease.in(inv(a.t1 - 0.18, a.t1, t));
-      st.peek = { k: kin * (1 - kout), lado: a.lado || 'direita', y: a.y || 520, expr: a.expressao || 'deadpan' };
+      st.peek = { k: kin * (1 - kout), lado: a.lado || 'direita', ladoV: a.ladoV, y: a.y || 520, expr: a.expressao || 'deadpan' };
     } else if (a.tipo === 'piscar') {
       if (Math.abs(t - a.t) < 0.09) st.forceBlink = 1 - Math.abs(t - a.t) / 0.09;
     } else if (a.tipo === 'soltar_mapa') {
@@ -1099,7 +1124,7 @@ function drawSam(ctx, st) {
   ctx.restore();
 }
 function drawPeek(ctx, st, C) {
-  const p = st.peek, s = st.s * 1.15, k = p.k;
+  const p = Object.assign({}, st.peek), s = st.s * 1.15, k = p.k; if (VIEW.v) p.lado = p.ladoV || 'esquerda';
   const v0 = VIEW.x0, v1 = VIEW.x1;
   const x = p.lado === 'esquerda' ? lerp(v0 - 120, v0 + 150, k) : lerp(v1 + 120, v1 - 150, k);
   ctx.save(); ctx.translate(x, p.y); ctx.rotate((p.lado === 'esquerda' ? 18 : -18) * D2R); ctx.scale(s, s);
@@ -1154,11 +1179,13 @@ function drawShip(ctx, x, y, sc, ang) {
   ctx.fillStyle = '#c0392b'; ctx.fillRect(2, -9, 3, 6);
   ctx.restore();
 }
+function mapBox(L) {
+  const w = L.v ? 650 : 700, mh = w * (MAP_EXT.lat1 - MAP_EXT.lat0) / (MAP_EXT.lon1 - MAP_EXT.lon0), pad = 18, hh = L.v ? 56 : 44;
+  return { w, mh, pad, hh, H: mh + pad * 2 + hh, x: L.v ? (L.W - w - pad * 2) / 2 - 40 : 34, y: L.v ? SAFE_V.topo : 34 };
+}
 function drawMapCard(ctx, L, ev, t) {
   const a = vis(t, ev.t0, ev.t1, 0.3, 0.3); if (a <= 0) return;
-  const w = L.v ? 720 : 700, mh = w * (MAP_EXT.lat1 - MAP_EXT.lat0) / (MAP_EXT.lon1 - MAP_EXT.lon0), pad = 18, hh = L.v ? 56 : 44;
-  const H = mh + pad * 2 + hh;
-  const x = L.v ? (L.W - w - pad * 2) / 2 : 34, y = L.v ? 150 : 34;
+  const { w, mh, pad, hh, H, x, y } = mapBox(L);
   const pop = Ease.back(inv(ev.t0, ev.t0 + 0.35, t));
   ctx.save(); ctx.globalAlpha = a;
   ctx.translate(x + (w + pad * 2) / 2, y + H / 2); ctx.scale(0.85 + 0.15 * pop, 0.85 + 0.15 * pop); ctx.rotate(-1.2 * D2R); ctx.translate(-(w + pad * 2) / 2, -H / 2);
@@ -1212,10 +1239,13 @@ function drawMapCard(ctx, L, ev, t) {
 }
 
 /* ---------------- OVERLAYS DE TELA ---------------- */
+function dateTagBox(ctx, L, txt) {
+  const fs = L.v ? 46 : 34; ctx.save(); ctx.font = `bold ${fs}px ${FONT_SUB}`; const w = ctx.measureText(txt).width + fs * 0.9, h = fs * 1.5; ctx.restore();
+  return { fs, w, h, x: L.W - w - (L.v ? 72 : 30), y: L.v ? 280 : 28 };
+}
 function drawDateTag(ctx, L, txt, pulse) {
-  const fs = L.v ? 46 : 34; ctx.save();
-  ctx.font = `bold ${fs}px ${FONT_SUB}`; const w = ctx.measureText(txt).width + fs * 0.9, h = fs * 1.5;
-  const x = L.W - w - (L.v ? 46 : 30), y = L.v ? 70 : 28, sc = 1 + 0.2 * pulse;
+  const { fs, w, h, x, y } = dateTagBox(ctx, L, txt), sc = 1 + 0.2 * pulse; ctx.save();
+  ctx.font = `bold ${fs}px ${FONT_SUB}`;
   ctx.translate(x + w / 2, y + h / 2); ctx.scale(sc, sc);
   ctx.fillStyle = 'rgba(12,12,12,0.92)'; rr(ctx, -w / 2, -h / 2, w, h, 10); ctx.fill();
   ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(txt, 0, 2);
@@ -1223,44 +1253,55 @@ function drawDateTag(ctx, L, txt, pulse) {
 }
 function drawSubtitles(ctx, L, blocks, t) {
   const b = blocks.find(q => t >= q.t0 && t < q.t1); if (!b) return;
-  let fs = L.v ? 62 : 50; const maxW = L.v ? L.W - 120 : L.W - 360;
+  const words = b.palavras; let fs = L.v ? 66 : 50; const maxW = L.v ? 820 : L.W - 360, minFs = L.v ? 54 : 26;
   ctx.save();
-  const words = b.palavras;
-  const measure = () => { ctx.font = `bold ${fs}px ${FONT_SUB}`; const sp = ctx.measureText(' ').width; let w = 0; const ws = words.map(q => { const m = ctx.measureText(q[0]).width; w += m; return m; }); w += sp * (words.length - 1); return { w, ws, sp }; };
-  let M = measure(); while (M.w > maxW && fs > 26) { fs -= 2; M = measure(); }
-  const padX = fs * 0.5, padY = fs * 0.32, h = fs * 1.2 + padY * 2;
-  const cy = L.v ? L.H * 0.70 : L.H - 100;
+  const lay = () => {
+    ctx.font = `bold ${fs}px ${FONT_SUB}`; const sp = ctx.measureText(' ').width, ws = words.map(q => ctx.measureText(q[0]).width);
+    const lineW = (a, z) => ws.slice(a, z).reduce((acc, v) => acc + v, 0) + sp * (z - a - 1);
+    let lines = [[0, words.length]];
+    if (L.v && words.length > 1 && lineW(0, words.length) > maxW) { let best = 1, bw = 1e9;
+      for (let i = 1; i < words.length; i++) { const m = Math.max(lineW(0, i), lineW(i, words.length)); if (m < bw) { bw = m; best = i; } }
+      lines = [[0, best], [best, words.length]]; }
+    return { ws, sp, lines, lineW, W: Math.max(...lines.map(([a, z]) => lineW(a, z))) };
+  };
+  let M = lay(); while (M.W > maxW && fs > minFs) { fs -= 2; M = lay(); }
+  const lh = fs * 1.2, padX = fs * 0.5, padY = fs * 0.32, h = lh * M.lines.length + padY * 2;
+  const cx = L.v ? 505 : L.W / 2, cy = L.v ? 1270 : L.H - 100;
   const pop = 0.94 + 0.06 * Ease.out(inv(b.t0, b.t0 + 0.09, t));
-  ctx.translate(L.W / 2, cy); ctx.scale(pop, pop);
-  ctx.fillStyle = 'rgba(10,10,10,0.74)'; rr(ctx, -M.w / 2 - padX, -h / 2, M.w + padX * 2, h, fs * 0.36); ctx.fill();
+  ctx.translate(cx, cy); ctx.scale(pop, pop);
+  ctx.fillStyle = 'rgba(10,10,10,0.74)'; rr(ctx, -M.W / 2 - padX, -h / 2, M.W + padX * 2, h, fs * 0.36); ctx.fill();
   let cur = -1; for (let i = 0; i < words.length; i++) if (t >= words[i][1]) cur = i;
-  let x = -M.w / 2; ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
-  for (let i = 0; i < words.length; i++) {
-    ctx.fillStyle = i === cur ? YELLOW : '#ffffff';
-    ctx.fillText(words[i][0], x, fs * 0.04); x += M.ws[i] + M.sp;
-  }
+  ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+  M.lines.forEach(([a, z], li) => {
+    let x = -M.lineW(a, z) / 2; const y = -h / 2 + padY + lh * (li + 0.5) + fs * 0.04;
+    for (let i = a; i < z; i++) { ctx.fillStyle = i === cur ? YELLOW : '#ffffff'; ctx.fillText(words[i][0], x, y); x += M.ws[i] + M.sp; }
+  });
   ctx.restore();
+}
+function nameBox(ctx, L, ev) {
+  ctx.save(); let f1 = L.v ? 50 : 40, f2 = L.v ? 30 : 25;
+  ctx.font = `${f1}px ${FONT_DISPLAY}`; let w1 = ctx.measureText(ev.nome).width;
+  ctx.font = `bold ${f2}px ${FONT_SUB}`; let w2 = ctx.measureText(ev.sub || '').width; ctx.restore();
+  if (L.v && Math.max(w1, w2) + 70 > 720) { const r = 650 / Math.max(w1, w2); f1 *= r; f2 *= r; w1 *= r; w2 *= r; } // não encosta na etiqueta de data
+  return { f1, f2, w: Math.max(w1, w2) + 70, h: L.v ? 140 : 112, x: L.v ? SAFE_V.x0 : 60, y: L.v ? 280 : L.H - 300 };
 }
 function drawLowerThird(ctx, L, ev, t) {
   const k = Ease.out(inv(ev.t0, ev.t0 + 0.35, t)) * (1 - Ease.in(inv(ev.t1 - 0.3, ev.t1, t))); if (k <= 0) return;
-  ctx.save();
-  ctx.font = `${L.v ? 50 : 40}px ${FONT_DISPLAY}`; const w1 = ctx.measureText(ev.nome).width;
-  ctx.font = `bold ${L.v ? 30 : 25}px ${FONT_SUB}`; const w2 = ctx.measureText(ev.sub || '').width;
-  const w = Math.max(w1, w2) + 70, h = L.v ? 140 : 112;
-  const x = L.v ? (L.W - w) / 2 : 60, y = L.v ? 230 : L.H - 300;
+  const { f1, f2, w, h, x, y } = nameBox(ctx, L, ev); ctx.save();
   ctx.translate(lerp(-w - 80, 0, k), 0); ctx.globalAlpha = clamp(k * 1.5, 0, 1);
   ctx.fillStyle = 'rgba(12,12,12,0.9)'; rr(ctx, x, y, w, h, 12); ctx.fill();
   ctx.fillStyle = YELLOW; ctx.fillRect(x, y, 12, h);
-  ctx.fillStyle = '#fff'; ctx.textBaseline = 'alphabetic'; ctx.font = `${L.v ? 50 : 40}px ${FONT_DISPLAY}`; ctx.fillText(ev.nome, x + 36, y + h * 0.5);
-  ctx.fillStyle = '#d6d6d6'; ctx.font = `bold ${L.v ? 30 : 25}px ${FONT_SUB}`; ctx.fillText(ev.sub || '', x + 36, y + h * 0.84);
+  ctx.fillStyle = '#fff'; ctx.textBaseline = 'alphabetic'; ctx.font = `${f1}px ${FONT_DISPLAY}`; ctx.fillText(ev.nome, x + 36, y + h * 0.5);
+  ctx.fillStyle = '#d6d6d6'; ctx.font = `bold ${f2}px ${FONT_SUB}`; ctx.fillText(ev.sub || '', x + 36, y + h * 0.84);
   ctx.restore();
 }
 function drawPopCard(ctx, L, ev, t) {
   if (t < ev.t0 || t > ev.t1) return;
   const kin = Ease.elastic(inv(ev.t0, ev.t0 + 0.55, t)), kout = 1 - Ease.in(inv(ev.t1 - 0.2, ev.t1, t)), k = kin * kout; if (k <= 0) return;
-  const p = L.v && ev.pv ? ev.pv : ev.pos, fs = (ev.tam || 64) * (L.v ? 1.1 : 1);
-  ctx.save(); ctx.translate(p[0], p[1]); ctx.rotate((ev.rot || 0) * D2R + Math.sin((t - ev.t0) * 2.2) * 0.02); ctx.scale(k, k);
-  ctx.font = `${fs}px ${FONT_DISPLAY}`; const lines = ev.txt.split('\n'); const w = Math.max(...lines.map(s => ctx.measureText(s).width)) + fs * 0.9, h = lines.length * fs * 1.1 + fs * 0.7;
+  const fs = (ev.tam || 64) * (L.v ? 0.9 : 1);
+  ctx.save(); ctx.font = `${fs}px ${FONT_DISPLAY}`; const lines = ev.txt.split('\n'); const w = Math.max(...lines.map(s => ctx.measureText(s).width)) + fs * 0.9, h = lines.length * fs * 1.1 + fs * 0.7;
+  const p = placeV(L, posV(L, ev), w / 2 + 14, h / 2 + 14 + (ev.icone ? fs * 0.55 : 0), h / 2 + 14);
+  ctx.translate(p[0], p[1]); ctx.rotate((ev.rot || 0) * D2R + Math.sin((t - ev.t0) * 2.2) * 0.02); ctx.scale(k, k);
   ctx.shadowColor = 'rgba(0,0,0,0.35)'; ctx.shadowBlur = 16; ctx.shadowOffsetY = 8;
   ctx.fillStyle = ev.cor || '#ffffff'; rr(ctx, -w / 2, -h / 2, w, h, 16); ctx.fill(); ctx.shadowColor = 'transparent';
   ctx.lineWidth = 7; ctx.strokeStyle = INK; ctx.stroke();
@@ -1290,17 +1331,21 @@ function drawStamp(ctx, L, ev, t) {
   if (t < ev.t || t > ev.t1) return;
   const d = t - ev.t, sc = d < 0.12 ? lerp(2.6, 1, Ease.in(d / 0.12)) : 1 + 0.04 * Math.sin(Math.min((d - 0.12) * 30, Math.PI)) * Math.exp(-(d - 0.12) * 8);
   const a = (d < 0.12 ? lerp(0, 0.95, d / 0.12) : 0.95) * (1 - inv(ev.t1 - 0.25, ev.t1, t));
-  const c = stampCanvas(ev.txt, ev.sub || '', ev.tam || 150); const p = L.v && ev.pv ? ev.pv : ev.pos;
-  ctx.save(); ctx.globalAlpha = a; ctx.translate(p[0], p[1]); ctx.rotate((ev.rot || -12) * D2R); ctx.scale(sc * (L.v ? 0.9 : 1), sc * (L.v ? 0.9 : 1));
+  const c = stampCanvas(ev.txt, ev.sub || '', ev.tam || 150), rot = (ev.rot || -12) * D2R, cs = Math.abs(Math.cos(rot)), sn = Math.abs(Math.sin(rot));
+  let s0 = L.v ? 0.9 : 1; const bw = (cs * c.width + sn * c.height) / 2, bh = (sn * c.width + cs * c.height) / 2;
+  if (L.v && bw * 2 * s0 > SAFE_V.x1 - SAFE_V.x0) s0 = (SAFE_V.x1 - SAFE_V.x0) / (bw * 2);
+  const p = placeV(L, posV(L, ev), bw * s0, bh * s0);
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(p[0], p[1]); ctx.rotate(rot); ctx.scale(sc * s0, sc * s0);
   ctx.drawImage(c, -c.width / 2, -c.height / 2); ctx.restore();
 }
 function drawCalendar(ctx, L, ev, t) {
   const a = vis(t, ev.t0, ev.t1, 0.25, 0.25); if (a <= 0) return;
-  const pop = Ease.back(inv(ev.t0, ev.t0 + 0.35, t)); const p = L.v && ev.pv ? ev.pv : ev.pos;
-  const w = 330, h = 360;
+  const pop = Ease.back(inv(ev.t0, ev.t0 + 0.35, t));
+  const w = 330, h = 360, S = L.v ? 1.05 : 1, offR = L.v ? 250 : 235;
+  const p = placeV(L, posV(L, ev), w / 2 * S + 10, h / 2 * S + 26 * S, ev.rodape ? offR + 58 : h / 2 * S + 10);
   const n = Math.round(lerp(ev.de, ev.ate, clamp((t - ev.tA) / (ev.tB - ev.tA), 0, 1)));
   const frac = ((t - ev.tA) / (ev.tB - ev.tA)) * (ev.ate - ev.de); const flip = t > ev.tA && t < ev.tB ? 1 - (frac % 1) : 0;
-  ctx.save(); ctx.globalAlpha = a; ctx.translate(p[0], p[1]); ctx.scale(pop * (L.v ? 1.25 : 1), pop * (L.v ? 1.25 : 1)); ctx.rotate(3 * D2R);
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(p[0], p[1]); ctx.scale(pop * S, pop * S); ctx.rotate(3 * D2R);
   ctx.shadowColor = 'rgba(0,0,0,0.35)'; ctx.shadowBlur = 18; ctx.shadowOffsetY = 8;
   ctx.fillStyle = '#fff'; rr(ctx, -w / 2, -h / 2, w, h, 18); ctx.fill(); ctx.shadowColor = 'transparent';
   ctx.lineWidth = 7; ctx.strokeStyle = INK; ctx.stroke();
@@ -1314,7 +1359,7 @@ function drawCalendar(ctx, L, ev, t) {
   ctx.restore();
   if (ev.rodape && t >= ev.tRodape) {
     const k = Ease.elastic(inv(ev.tRodape, ev.tRodape + 0.5, t));
-    ctx.save(); ctx.globalAlpha = a; ctx.translate(p[0], p[1] + (L.v ? 290 : 235)); ctx.scale(k, k); ctx.rotate(-4 * D2R);
+    ctx.save(); ctx.globalAlpha = a; ctx.translate(p[0], p[1] + offR); ctx.scale(k, k); ctx.rotate(-4 * D2R);
     ctx.font = `64px ${FONT_DISPLAY}`; const w2 = ctx.measureText(ev.rodape).width + 50;
     ctx.fillStyle = YELLOW; rr(ctx, -w2 / 2, -48, w2, 96, 14); ctx.fill(); ctx.lineWidth = 7; ctx.strokeStyle = INK; ctx.stroke();
     ctx.fillStyle = INK; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(ev.rodape, 0, 4); ctx.restore();
@@ -1323,8 +1368,8 @@ function drawCalendar(ctx, L, ev, t) {
 function drawReview(ctx, L, ev, t) {
   if (t < ev.t0 || t > ev.t1) return;
   const kin = Ease.back(inv(ev.t0, ev.t0 + 0.4, t)), kout = Ease.in(inv(ev.t1 - 0.3, ev.t1, t));
-  const p = L.v && ev.pv ? ev.pv : ev.pos, w = 680, h = 380;
-  ctx.save(); ctx.translate(p[0] + kout * (L.v ? 0 : 1200), p[1] + (1 - kin) * 700 + (L.v ? kout * 1400 : 0)); ctx.rotate(-2 * D2R); if (L.v) ctx.scale(1.2, 1.2);
+  const w = 680, h = 380, p = placeV(L, posV(L, ev), w / 2 + 10, h / 2 + 10);
+  ctx.save(); ctx.translate(p[0] + kout * (L.v ? 0 : 1200), p[1] + (1 - kin) * 700 + (L.v ? kout * 1400 : 0)); ctx.rotate(-2 * D2R);
   ctx.shadowColor = 'rgba(0,0,0,0.4)'; ctx.shadowBlur = 26; ctx.shadowOffsetY = 10;
   ctx.fillStyle = '#ffffff'; rr(ctx, -w / 2, -h / 2, w, h, 26); ctx.fill(); ctx.shadowColor = 'transparent';
   ctx.lineWidth = 6; ctx.strokeStyle = '#1c1c1c'; ctx.stroke();
@@ -1351,11 +1396,13 @@ function drawReview(ctx, L, ev, t) {
 }
 function drawSign(ctx, L, ev, t) {
   if (t < ev.t0 || t > ev.t1) return;
-  const d = t - ev.t0, p = L.v && ev.pv ? ev.pv : ev.pos;
+  const d = t - ev.t0, S = L.v ? 0.9 : 1, R = 170 * Math.SQRT2 * S;
+  let p = posV(L, ev);
+  if (L.v) { const X = placeV(L, [p[0], -40 + S * (p[1] + 40)], R, R); p = [X[0], (X[1] + 40) / S - 40]; }
   const drop = Ease.back(clamp(d / 0.38, 0, 1));
   const y = lerp(-420, p[1], drop), ang = d > 0.3 ? 20 * Math.exp(-2.3 * (d - 0.3)) * Math.cos(8 * (d - 0.3)) : -8;
   const out = Ease.in(inv(ev.t1 - 0.25, ev.t1, t));
-  ctx.save(); ctx.globalAlpha = 1 - out; ctx.translate(p[0], -40); ctx.rotate(ang * D2R); if (L.v) ctx.scale(1.2, 1.2);
+  ctx.save(); ctx.globalAlpha = 1 - out; ctx.translate(p[0], -40); ctx.rotate(ang * D2R); ctx.scale(S, S);
   const cy = y + 40, s = 170;
   ctx.strokeStyle = '#555'; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(-60, 0); ctx.lineTo(-60, cy - s * 0.72); ctx.moveTo(60, 0); ctx.lineTo(60, cy - s * 0.72); ctx.stroke();
   ctx.translate(0, cy); ctx.rotate(45 * D2R);
@@ -1365,6 +1412,31 @@ function drawSign(ctx, L, ev, t) {
   ctx.rotate(-45 * D2R); ctx.fillStyle = INK; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.font = `62px ${FONT_DISPLAY}`; ctx.fillText(ev.txt || 'DETOUR', 0, -18);
   ctx.font = `90px ${FONT_DISPLAY}`; ctx.fillText(ev.seta || '→', 0, 60);
+  ctx.restore();
+}
+function hookBox(ctx, L, ev) {
+  const lines = String(ev.txt || '').toUpperCase().split('\n'); let fs = ev.tam || (L.v ? 104 : 88);
+  ctx.save(); ctx.font = `${fs}px ${FONT_STAMP}`;
+  const maxW = L.v ? SAFE_V.x1 - SAFE_V.x0 - 40 : 1500; let widest = Math.max(...lines.map(l => ctx.measureText(l).width)); ctx.restore();
+  if (widest > maxW) { fs *= maxW / widest; widest = maxW; }
+  const cx = L.v ? 510 : L.W / 2, cy = ev.y || (L.v ? 520 : 200), hh = lines.length * fs * 1.04 / 2 + fs * 0.15;
+  return { lines, fs, cx, cy, box: [cx - widest / 2 - 20, cy - hh, cx + widest / 2 + 20, cy + hh] };
+}
+function drawHook(ctx, L, ev, t) {
+  const a = vis(t, ev.t0 || 0, ev.t1 || 2.8, 0.1, 0.25); if (a <= 0) return;
+  const { lines, fs, cx, cy } = hookBox(ctx, L, ev);
+  const dest = new Set((ev.destaque || []).map(w => String(w).toUpperCase().replace(/[^A-Z0-9']/g, '')));
+  ctx.save(); ctx.font = `${fs}px ${FONT_STAMP}`;
+  const kin = Ease.back(inv(ev.t0 || 0, (ev.t0 || 0) + 0.35, t));
+  ctx.globalAlpha = a; ctx.translate(cx, cy); ctx.rotate((-2.5 + Math.sin((t - (ev.t0 || 0)) * 3.2) * 0.7) * D2R); ctx.scale(0.72 + 0.28 * kin, 0.72 + 0.28 * kin);
+  ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
+  const sp = ctx.measureText(' ').width;
+  lines.forEach((ln, i) => {
+    const ws = ln.split(' '), wd = ws.map(w => ctx.measureText(w).width), tot = wd.reduce((x, v) => x + v, 0) + sp * (ws.length - 1);
+    let x = -tot / 2; const y = (i - (lines.length - 1) / 2) * fs * 1.04;
+    ws.forEach((w, j) => { ctx.lineWidth = fs * 0.2; ctx.strokeStyle = INK; ctx.strokeText(w, x, y);
+      ctx.fillStyle = dest.has(w.replace(/[^A-Z0-9']/g, '')) ? YELLOW : '#ffffff'; ctx.fillText(w, x, y); x += wd[j] + sp; });
+  });
   ctx.restore();
 }
 function drawGodRays(ctx, L, ev, t) {
@@ -1436,7 +1508,8 @@ function camAt(scene, t, vert) {
     if (e.tipo === 'tremer') { const d = t - e.t; if (d >= 0 && d < (e.dur || 0.35)) { const f = 1 - d / (e.dur || 0.35); shx += Math.sin(d * 87) * (e.amp || 16) * f; shy += Math.cos(d * 71) * (e.amp || 16) * 0.6 * f; } }
     if (e.tipo === 'punch') { const d = t - e.t; if (d >= 0) { const up = Ease.out(clamp(d / 0.12, 0, 1)), down = e.dur ? 1 - Ease.inOut(inv(e.t + e.dur, e.t + e.dur + 0.3, t)) : 1; z *= 1 + (e.z || 0.15) * up * down; } }
   }
-  return { z, fx, fy, rot, shx, shy };
+  const fixa = vert && (k0.fxv !== undefined || (k1 && k1.fxv !== undefined));
+  return { z, fx, fy, rot, shx, shy, fixa };
 }
 
 /* ---------------- MOTOR ---------------- */
@@ -1452,11 +1525,12 @@ function create(canvas, episode, assets) {
   const boca = assets.boca || null;
   const mouthAt = t => { if (!boca) return 0; const i = Math.floor(t * fps); return boca[clamp(i, 0, boca.length - 1)] || 0; };
   const scenes = episode.cenas.slice().sort((a, b) => a.inicio - b.inicio);
-  const subs = buildSubtitleBlocks(episode.legenda || []);
+  const subs = buildSubtitleBlocks(episode.legenda || [], L.v);
   const warnings = validate(episode);
 
   function renderWorld(g, scene, t) {
     const cam = camAt(scene, t, L.v);
+    const st = scene.sam ? samState(scene.sam, t, mouthAt) : null; VIEW.head = null;
     g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = '#000'; g.fillRect(0, 0, L.W, L.H);
     let base = L.v ? (L.H / 1080) : (L.W / 1920);
     const extra = cam.rot ? 1.035 : 1;
@@ -1466,9 +1540,20 @@ function create(canvas, episode, assets) {
     if (!L.v) { cx = F[0] * L.W / 1920; cy = F[1] * L.H / 1080; }
     g.translate(cx + cam.shx, cy + cam.shy); g.rotate(cam.rot * D2R); g.scale(z, z);
     let Fx = F[0], Fy = F[1];
-    if (L.v) { const half = (L.W / 2) / z; Fx = clamp(Fx, half, 1920 - half); const halfH = (L.H / 2) / z; Fy = clamp(Fy, halfH, 1080 - halfH); }
+    if (L.v) {
+      // segue o Sam: mantém o Sam entre x 380 e 700 da tela (longe da coluna de botões), salvo se a cena fixou fxv
+      if (st && st.visible && !st.peek && !cam.fixa && (scene.camera || {}).seguir !== false) {
+        const sx = (st.x - Fx) * z + L.W / 2;
+        if (sx < 380) Fx = st.x + (L.W / 2 - 380) / z; else if (sx > 700) Fx = st.x - (700 - L.W / 2) / z;
+      }
+      const half = (L.W / 2) / z; Fx = clamp(Fx, half, 1920 - half); const halfH = (L.H / 2) / z; Fy = clamp(Fy, halfH, 1080 - halfH);
+    }
     g.translate(-Fx, -Fy);
-    VIEW.x0 = Fx - (L.v ? L.W / 2 : cx) / z; VIEW.x1 = Fx + (L.v ? L.W / 2 : (L.W - cx)) / z;
+    if (L.v && st && st.visible && !st.peek) { // caixa do rosto (testa ao queixo) em coordenadas de tela
+      const r = RIG.headR * st.s * z, hx = L.W / 2 + (st.x - Fx) * z, hy = L.H / 2 + (st.y + HEAD_CY * st.s - Fy) * z;
+      VIEW.head = [hx - r * 1.05, hy - r * 0.85, hx + r * 1.05, hy + r * 0.8];
+    }
+    VIEW.x0 = Fx - (L.v ? L.W / 2 : cx) / z; VIEW.x1 = Fx + (L.v ? L.W / 2 : (L.W - cx)) / z; VIEW.v = L.v;
     const img = assets.images[scene.fundo];
     if (img) g.drawImage(img, 0, 0, 1920, 1080); else { g.fillStyle = '#7aa'; g.fillRect(0, 0, 1920, 1080); }
     // efeitos de mundo atrás do Sam
@@ -1476,8 +1561,7 @@ function create(canvas, episode, assets) {
       if (ev.tipo === 'poeira') drawDust(g, ev, t);
       if (ev.tipo === 'brilho') drawSparkle(g, ev, t);
     }
-    if (scene.sam) {
-      const st = samState(scene.sam, t, mouthAt);
+    if (st) {
       if (st.speed > 0) drawSpeedLines(g, st.speedX0 !== undefined ? st.speedX0 : scene.sam.x, Math.min(st.x, 1920 + 300), st.y, t, st.speed);
       drawSam(g, st);
       if (st.flyMap !== null) drawFlyingMap(g, st, st.flyMap);
@@ -1490,7 +1574,7 @@ function create(canvas, episode, assets) {
     // cena atual + transição
     let i = 0; for (let k = 0; k < scenes.length; k++) if (scenes[k].inicio <= t) i = k;
     const sc = scenes[i], tr = sc.entrada || { tipo: 'corte', dur: 0 };
-    renderWorld(wctx, sc, t);
+    renderWorld(wctx, sc, t); const headBox = VIEW.head;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     if (i > 0 && tr.tipo !== 'corte' && t < sc.inicio + (tr.dur || 0.35)) {
       const k = inv(sc.inicio, sc.inicio + (tr.dur || 0.35), t);
@@ -1506,7 +1590,27 @@ function create(canvas, episode, assets) {
       } else { ctx.drawImage(world2, 0, 0); ctx.globalAlpha = Ease.inOut(k); ctx.drawImage(world, 0, 0); ctx.globalAlpha = 1; }
     } else ctx.drawImage(world, 0, 0);
     // overlays de tela
-    for (const ev of (episode.eventos || [])) {
+    const fmtNome = L.v ? '9x16' : '16x9';
+    const evs = (episode.eventos || []).filter(e => !e.so || e.so === fmtNome); // "so": "9x16" = só no vertical
+    const ganchos = evs.filter(e => e.tipo === 'gancho');
+    const adiar = ev => { // nome e mapa esperam o gancho sair da tela
+      if (ev.tipo !== 'nome' && ev.tipo !== 'mapa') return ev;
+      const g = ganchos.find(q => ev.t0 < (q.t1 || 2.8) && ev.t1 > (q.t0 || 0)); if (!g) return ev;
+      const n = Object.assign({}, ev, { t0: Math.max(ev.t0, g.t1 || 2.8) }); return n.t1 - n.t0 >= 0.6 ? n : null;
+    };
+    const dtag = (episode.datas || []).filter(d => t >= d.t0 && t < d.t1).pop();
+    OCC.length = 0;
+    if (L.v) {
+      if (dtag) { const b = dateTagBox(ctx, L, String(dtag.txt)); OCC.push([b.x - 8, b.y - 8, b.x + b.w + 8, b.y + b.h + 8]); }
+      OCC.push([95, 1205, 915, 1335]); // faixa da legenda
+      if (headBox) OCC.push(headBox);
+      for (const e0 of evs) { const e = adiar(e0); if (!e) continue;
+        if (e.tipo === 'nome' && t >= e.t0 && t <= e.t1) { const b = nameBox(ctx, L, e); OCC.push([b.x, b.y, b.x + b.w, b.y + b.h]); }
+        if (e.tipo === 'mapa' && t >= e.t0 && t <= e.t1) { const b = mapBox(L); OCC.push([b.x, b.y, b.x + b.w + b.pad * 2, b.y + b.H]); }
+        if (e.tipo === 'gancho' && t >= (e.t0 || 0) && t <= (e.t1 || 2.8)) OCC.push(hookBox(ctx, L, e).box); }
+    }
+    for (const ev0 of evs) {
+      const ev = adiar(ev0); if (!ev) continue;
       switch (ev.tipo) {
         case 'raios': drawGodRays(ctx, L, ev, t); break;
         case 'mapa': drawMapCard(ctx, L, ev, t); break;
@@ -1516,10 +1620,11 @@ function create(canvas, episode, assets) {
         case 'calendario': drawCalendar(ctx, L, ev, t); break;
         case 'review': drawReview(ctx, L, ev, t); break;
         case 'placa': drawSign(ctx, L, ev, t); break;
+        case 'gancho': drawHook(ctx, L, ev, t); break;
       }
     }
     // etiqueta de data
-    const dt = (episode.datas || []).filter(d => t >= d.t0 && t < d.t1).pop();
+    const dt = dtag;
     if (dt) { const pulse = dt.pulso ? Math.sin(Math.PI * clamp((t - dt.pulso) / 0.35, 0, 1)) : 0; drawDateTag(ctx, L, dt.txt, pulse); }
     drawSubtitles(ctx, L, subs, t);
     if (episode.fade_final) { const a = inv(episode.duracao - episode.fade_final, episode.duracao, t); if (a > 0) { ctx.fillStyle = `rgba(0,0,0,${a})`; ctx.fillRect(0, 0, L.W, L.H); } }
@@ -1527,13 +1632,32 @@ function create(canvas, episode, assets) {
   return { renderAt, duration: episode.duracao, fps, L, warnings, subs };
 }
 
-/* Legenda: blocos de até 6 palavras, sempre cortados no fim da frase */
-function buildSubtitleBlocks(legenda) {
+/* Legenda: blocos de até 6 palavras, sempre cortados no fim da frase. No 9:16 cada bloco vira pedaços de até
+   3 palavras (~18 letras), que cabem grandes na tela do celular. Palavra com hífen nunca é partida. */
+function buildSubtitleBlocks(legenda, vert) {
+  const bl = legenda.map(b => ({ fim: b.fim, palavras: b.palavras.map(q => [String(q[0]), q[1]]) }));
+  const hyph = /^[-\u2013]/, tail = /[-\u2013]$/;
+  for (let i = 0; i < bl.length; i++) {
+    const ws = bl[i].palavras;
+    for (let j = ws.length - 1; j >= 1; j--) if (hyph.test(ws[j][0]) || tail.test(ws[j - 1][0])) { ws[j - 1][0] += ws[j][0]; ws.splice(j, 1); }
+    if (i > 0 && ws.length) { const prev = bl[i - 1].palavras;
+      if (prev.length && (hyph.test(ws[0][0]) || tail.test(prev[prev.length - 1][0]))) { prev[prev.length - 1][0] += ws[0][0]; ws.shift(); } }
+  }
   const out = [];
-  for (const b of legenda) {
-    const words = b.palavras; // [[texto, inicio], ...]
+  for (const b of bl) {
+    const words = b.palavras; if (!words.length) continue;
     const t1 = b.fim !== undefined ? b.fim : words[words.length - 1][1] + 0.6;
-    out.push({ t0: words[0][1] - 0.05, t1, palavras: words });
+    if (!vert) { out.push({ t0: words[0][1] - 0.05, t1, palavras: words }); continue; }
+    const chunks = []; let cur = [];
+    const len = arr => arr.reduce((n, q) => n + q[0].length, 0) + Math.max(0, arr.length - 1);
+    for (const w of words) {
+      if (cur.length && (cur.length >= 3 || len(cur.concat([w])) > 18 || (cur.length >= 2 && /[,;:]$/.test(cur[cur.length - 1][0])))) { chunks.push(cur); cur = []; }
+      cur.push(w);
+    }
+    if (cur.length) chunks.push(cur);
+    const n = chunks.length; // sem palavra sozinha no fim, se couber junto
+    if (n >= 2 && chunks[n - 1].length === 1 && chunks[n - 2].length <= 2 && len(chunks[n - 2].concat(chunks[n - 1])) <= 22) { chunks[n - 2] = chunks[n - 2].concat(chunks[n - 1]); chunks.pop(); }
+    for (const c of chunks) out.push({ t0: c[0][1] - 0.05, t1, palavras: c });
   }
   out.sort((a, b) => a.t0 - b.t0);
   for (let i = 0; i < out.length - 1; i++) out[i].t1 = Math.min(out[i].t1, out[i + 1].t0);
@@ -1562,6 +1686,49 @@ function validate(ep) {
     const inner = txt.slice(0, -1);
     if (/[.!?](\s|$)/.test(inner) && !/\.\.\.$/.test(txt)) w.push(`⚠ bloco junta duas frases: "${txt}"`);
   }
+  w.push(...checkShorts(ep));
+  return w;
+}
+
+/* Ritmo, datas e gancho — o que mais derruba a retenção, em especial no 9:16 */
+function checkShorts(ep) {
+  const w = [], vert = ep.formato === '9x16', lim = vert ? 5 : 8, dur = ep.duracao || 0, cenas = (ep.cenas || []).slice().sort((a, b) => a.inicio - b.inicio);
+  const tOf = e => (e.t !== undefined ? e.t : e.t0 !== undefined ? e.t0 : null);
+  // 1) ritmo: algo novo na tela (corte/zoom, punch, tremida, gag, efeito, ação ou troca de figurino) a cada poucos segundos
+  if (dur > 0 && cenas.length) {
+    const beats = [0, dur];
+    for (const sc of cenas) {
+      beats.push(sc.inicio); const cam = sc.camera || {};
+      for (const k of cam.chaves || []) beats.push(k.t);
+      for (const e of cam.eventos || []) beats.push(tOf(e));
+      for (const e of sc.efeitos || []) beats.push(tOf(e));
+      const sm = sc.sam || {};
+      for (const a of sm.acoes || []) if (a.tipo !== 'piscar') beats.push(tOf(a));
+      for (const k of sm.chaves || []) if (k.figurino || k.prop !== undefined) beats.push(k.t);
+    }
+    for (const e of ep.eventos || []) if (!e.so || e.so === (vert ? '9x16' : '16x9')) beats.push(tOf(e));
+    const bs = beats.filter(x => x !== null && x >= 0 && x <= dur).sort((a, b) => a - b);
+    for (let i = 0; i < bs.length - 1; i++) {
+      const gap = bs[i + 1] - bs[i]; if (gap <= lim + 0.05) continue;
+      let sc = cenas[0]; for (const c of cenas) if (c.inicio <= bs[i] + 0.01) sc = c;
+      if (sc.ritmo === 'livre') continue;
+      w.push(`⚠ ritmo: ${gap.toFixed(1)} s sem nada novo na tela (${bs[i].toFixed(1)}–${bs[i + 1].toFixed(1)} s, cena ${sc.id}). No ${vert ? '9:16' : '16:9'}, algo novo a cada ${lim} s: corte ou zoom de câmera, punch, gag, troca de figurino (cena séria: "ritmo": "livre")`);
+    }
+  }
+  // 2) etiqueta de data coerente com a narração
+  const datas = ep.datas || [];
+  const tagAt = tt => { const d = datas.filter(x => tt >= x.t0 && tt < x.t1).pop(); return d ? String(d.txt) : null; };
+  for (const b of ep.legenda || []) for (const [wtxt, wt] of b.palavras) {
+    const clean = String(wtxt).replace(/[^\w]/g, '');
+    if (/^(1\d{3}|20\d{2})$/.test(clean)) {
+      const tag = tagAt(wt + 0.3), ty = tag && /^\d{4}$/.test(tag) ? +tag : null;
+      const perto = datas.some(d => String(d.txt).includes(clean) && Math.abs(d.t0 - wt) < 4);
+      if (ty !== null && Math.abs(ty - +clean) > 2 && !perto) w.push(`⚠ data: a narração diz ${clean} (${wt.toFixed(1)} s), mas a etiqueta mostra ${tag}`);
+    }
+    if (/^(today|nowadays)$/i.test(clean)) { const tag = tagAt(wt + 0.3); if (tag && /^\d{3,4}s?$/.test(tag)) w.push(`⚠ data: a narração diz "${clean}" (${wt.toFixed(1)} s), mas a etiqueta ainda mostra ${tag} — use "TODAY"`); }
+  }
+  // 3) 9:16 abre com o gancho escrito na tela
+  if (vert && !(ep.eventos || []).some(e => e.tipo === 'gancho' && (e.t0 || 0) < 1 && (!e.so || e.so === '9x16'))) w.push('⚠ 9:16 sem gancho na tela: adicione {"tipo": "gancho", "t0": 0, "t1": 2.8, "txt": "FRASE CURTA\\nDO GANCHO", "destaque": ["PALAVRA"]}');
   return w;
 }
 
@@ -1572,5 +1739,5 @@ function drawCharacter(ctx, o) {
   const st = samState(sam, o.t || 0.5, null); if (o.propMao) st.propMao = o.propMao; drawSam(ctx, st);
 }
 const PARTS = { tronco: Object.keys(TORSO), frente: Object.keys(FRONT), baixo: Object.keys(LOWER), costas: Object.keys(BACK), chapeu: HAT_NAMES, rosto: Object.keys(FACE).concat(['cabelo']), cabelo: Object.keys(HAIR) };
-global.SamEngine = { create, drawCharacter, makeCostume, validateSpec, POSES, POSE_NAMES, EXPR, EXPR_NAMES, COSTUMES, PROP_NAMES, PRESETS, PARTS, GALLERY_HINT, validate, version: '6.2' };
+global.SamEngine = { create, drawCharacter, makeCostume, validateSpec, POSES, POSE_NAMES, EXPR, EXPR_NAMES, COSTUMES, PROP_NAMES, PRESETS, PARTS, GALLERY_HINT, validate, buildSubtitleBlocks, checkShorts, SAFE_V, version: '6.3' };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -14,7 +14,7 @@ import json, re, subprocess, sys, wave, math
 def tokens(text):
     out = []
     for m in re.finditer(r'\[([^|\]]+)\|([^\]]+)\]|(\S+)', text):
-        if m.group(3): disp, spoken = m.group(3), m.group(3)
+        if m.group(3): disp, spoken = m.group(3), re.sub(r'[-\u2013\u2014]+', ' ', m.group(3))  # brand-new -> fala 'brand new', mostra 'brand-new'
         else: disp, spoken = m.group(1).strip(), m.group(2).strip()
         sp = [re.sub(r"[^a-z']", '', w.lower()) for w in spoken.split()]
         sp = [w.strip("'") for w in sp if w.strip("'")]

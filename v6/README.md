@@ -1,4 +1,4 @@
-# Sam Studio v6.2 — "Sam vivo" (Sam Ruins History)
+# Sam Studio v6.3 — "Sam vivo" (Sam Ruins History)
 
 **Abrir o studio:** https://wemmersonferreira925-cpu.github.io/estudio-sam/v6/
 (abre com a demo de 35 s do Cabral; dá para carregar outro `episode.json`, os fundos e o áudio e exportar o vídeo).
@@ -9,6 +9,10 @@
 > "Checagem" shows **zero ⚠**, then click **Exportar vídeo** once in 16:9 and once in 9:16. Sam is always drawn by
 > the studio (never painted into the backgrounds). Everything on screen and in the narration is in English.
 
+> **New in v6.3 (Shorts mode):** in 9:16 the studio keeps text and gags inside the TikTok/Reels safe zone,
+> splits subtitles into big 3-word chunks, keeps Sam centered, adds a hook title (`"tipo": "gancho"`) and warns
+> about slow stretches and wrong date tags (section 9; full recipe in `SHORTS.md`).
+>
 > **New in v6.2:** a wardrobe of **97 ready-made costumes** for many countries, eras and themes, **38 props**,
 > custom costumes built from parts inside `episode.json` (section 5), costume changes mid-scene, and a
 > **20-episode plan with dates** in `PLANO-20-EPISODIOS.md` / `calendario-20-episodios.json` (Saturdays 12:00 Fortaleza, 28/11/2026 → 10/04/2027).
@@ -17,7 +21,8 @@ Arquivos desta pasta: `index.html` (o studio), `sam-engine.js` (motor de animaç
 headless em MP4 com Node + Playwright), `alinhar.py` (alinha roteiro ↔ narração e gera a legenda),
 `sam_audio.py` (efeitos sonoros, mix, boca e master −14 LUFS), `episode-exemplo.json` (episódio de teste),
 `galeria-figurinos.jpg` (os 97 figurinos numa imagem) + `galeria-1.jpg` … `galeria-4.jpg` (maiores),
-`PLANO-20-EPISODIOS.md` e `calendario-20-episodios.json` (datas, temas, figurinos, fatos e votos).
+`PLANO-20-EPISODIOS.md` e `calendario-20-episodios.json` (datas, temas, figurinos, fatos e votos),
+`SHORTS.md` (receita do corte vertical para TikTok/Facebook).
 **A versão v5.0/v5.1 na raiz do repositório não foi alterada.**
 
 **Aprovado pelo Timothy no teste de 35 s (Cabral): "excelente", "estou gostando muito".**
@@ -201,7 +206,19 @@ marco do lugar no terço central, paleta da era repetida no episódio.
   lenta, sem SFX cômico.
 - Final de todo episódio: o Sam olha para a câmera (deadpan) + voto de 3 opções.
 
-## 8. Próximas melhorias do studio (v6.3+)
+## 8. Próximas melhorias do studio (v6.4+)
 - Figurante animado (2º boneco com figurino) para diálogos e cabo de guerra.
 - Mapa com mais regiões (Europa detalhada, Ásia oriental, EUA por estados).
-- Mais cabelos e rostos (tranças, careca, perucas coloridas) quando um episódio pedir.
+- Corte vertical automático: gerar o episode.json de 2 min a partir do episódio longo.
+
+## 9. Modo Shorts (9:16) — v6.3
+No 9:16 o studio arruma sozinho o que o TikTok/Reels cobrem: etiqueta de data e nome abaixo das abas, mapa e gags
+dentro da zona segura (x 72–948, y 262–1400), legenda em pedaços de até 3 palavras (grande, sem partir palavra
+com hífen), câmera mantendo o Sam no miolo e o Sam espiando pela esquerda. A opção "Mostrar onde o TikTok/Reels
+cobre a tela" pinta as zonas só na prévia.
+- **Gancho (obrigatório no 9:16):** `{"tipo": "gancho", "t0": 0, "t1": 2.8, "txt": "BRAZIL WAS\nFOUNDED BY\nACCIDENT", "destaque": ["ACCIDENT"]}`.
+- **Cena séria:** `"ritmo": "livre"`. **Câmera fixa no 9:16:** `"camera": {"seguir": false}` ou chaves com `fxv`.
+- **Só no vertical:** `"so": "9x16"` em qualquer evento. Os gags desviam uns dos outros, do rosto do Sam e da legenda.
+- **Checagem (⚠):** ritmo (nada novo na tela por mais de 5 s no 9:16 / 8 s no 16:9), data da etiqueta diferente da
+  narração ("1889" × "1888", "today" × "1960") e 9:16 sem gancho.
+- Receita completa do corte de 2 min, exportação e publicação: `SHORTS.md`.

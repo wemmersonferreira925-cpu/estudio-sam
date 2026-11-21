@@ -210,6 +210,15 @@
       "corte": true
      },
      {
+      "zoom": 1.07466,
+      "fx": 0.5,
+      "fy": 0.6,
+      "t": 31.7,
+      "corte": true,
+      "zoomv": 1.25,
+      "fxv": 0.33
+     },
+     {
       "t": 33.551,
       "zoom": 1.08,
       "fx": 0.5,
@@ -363,6 +372,16 @@
   }
  ],
  "eventos": [
+  {
+   "tipo": "gancho",
+   "so": "9x16",
+   "t0": 0,
+   "t1": 2.8,
+   "txt": "PORTUGAL FOUND\nBRAZIL BY\nACCIDENT",
+   "destaque": [
+    "ACCIDENT"
+   ]
+  },
   {
    "tipo": "nome",
    "t0": 1.25,
