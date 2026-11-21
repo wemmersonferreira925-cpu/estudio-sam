@@ -1,4 +1,4 @@
-# Sam Studio v6 — "Sam vivo" (Sam Ruins History)
+# Sam Studio v6.2 — "Sam vivo" (Sam Ruins History)
 
 **Abrir o studio:** https://wemmersonferreira925-cpu.github.io/estudio-sam/v6/
 (abre com a demo de 35 s do Cabral; dá para carregar outro `episode.json`, os fundos e o áudio e exportar o vídeo).
@@ -9,9 +9,15 @@
 > "Checagem" shows **zero ⚠**, then click **Exportar vídeo** once in 16:9 and once in 9:16. Sam is always drawn by
 > the studio (never painted into the backgrounds). Everything on screen and in the narration is in English.
 
+> **New in v6.2:** a wardrobe of **97 ready-made costumes** for many countries, eras and themes, **38 props**,
+> custom costumes built from parts inside `episode.json` (section 5), costume changes mid-scene, and a
+> **20-episode plan with dates** in `PLANO-20-EPISODIOS.md` / `calendario-20-episodios.json` (Saturdays 12:00 Fortaleza, 28/11/2026 → 10/04/2027).
+
 Arquivos desta pasta: `index.html` (o studio), `sam-engine.js` (motor de animação), `render.mjs` (render
 headless em MP4 com Node + Playwright), `alinhar.py` (alinha roteiro ↔ narração e gera a legenda),
-`sam_audio.py` (efeitos sonoros, mix, boca e master −14 LUFS), `episode-exemplo.json` (episódio de teste).
+`sam_audio.py` (efeitos sonoros, mix, boca e master −14 LUFS), `episode-exemplo.json` (episódio de teste),
+`galeria-figurinos.jpg` (os 97 figurinos numa imagem) + `galeria-1.jpg` … `galeria-4.jpg` (maiores),
+`PLANO-20-EPISODIOS.md` e `calendario-20-episodios.json` (datas, temas, figurinos, fatos e votos).
 **A versão v5.0/v5.1 na raiz do repositório não foi alterada.**
 
 **Aprovado pelo Timothy no teste de 35 s (Cabral): "excelente", "estou gostando muito".**
@@ -110,31 +116,68 @@ mesma pose por 20–40 s, sempre sorrindo). O v6 mantém a pintura A5 e tira o S
   `carimbo` (txt, sub, pos, rot), `calendario` (de, ate, tA, tB, mes, rodape), `review` (estrelas,
   frases, nome, sub, app), `placa` (txt, seta), `raios`. Todos aceitam `pv` = posição no 9:16.
 
-## 5. Catálogo validado (nomes fixos — o studio avisa se usar outro) — v6.1
+## 5. Catálogo validado (nomes fixos — o studio avisa se usar outro) — v6.2
 - **Poses (20):** idle, neutro, apontar, apontar_lado, apontar_esq, apontar_cima, dar_de_ombros,
   maos_ao_alto, susto, comemorar, rezar, reverencia, segurar_mapa, maos_na_cintura, reivindicar,
-  acenar, segurar_lanca, erguer (braço direito para cima, ex.: espada), segurar (duas mãos à frente),
-  assinar (mão no peito, ex.: pena).
+  acenar, segurar_lanca (objeto em pé na mão), erguer (braço direito para cima, ex.: espada), segurar
+  (duas mãos à frente), assinar (mão no peito, ex.: pena).
 - **Expressões (12):** deadpan (padrão), serio, neutro, falando, cetico, sorriso, orgulhoso, surpreso,
   assustado, feliz, olhos_fechados, irritado.
-- **Figurinos (19):** eua (abertura/voto), capitao (explorador/Cabral), colono (colono, lenhador,
-  cafeicultor — chapéu de palha), tupi (indígena: cocar de penas, pintura corporal, saia de fibra),
-  frances (marinheiro francês), nobre (donatário/autoridade: gola de rufo, capa preta, chapéu com
-  pluma), garimpeiro, rei (coroa + manto vermelho com arminho), imperador (coroa + manto verde de
-  penas), uniforme_imperial (Pedro I em Ipiranga: farda azul, dragonas, faixa verde-amarela, bicorne),
-  pedro_ii (barba branca, sobrecasaca preta), princesa (vestido azul, tiara, colar de pérolas),
-  militar (farda 1889, quepe), presidente (terno e gravata), presidente_fedora (terno + chapéu),
-  jogador (camisa amarela "10", short azul), carnaval (cocar de penas gigante, colete de lantejoulas),
-  turista (camiseta azul, hoje), padrao.
-  Galeria: botão "Ver galeria de figurinos no palco" no studio, ou `galeria-figurinos.jpg`.
-- **Objetos de cena (`prop`):** com as duas mãos: mapa, bateia (ouro), taca (troféu), livro, planta
-  (projeto de cidade); numa mão (direita; `propMao: "L"` para a esquerda): espada, cetro, machado,
-  pena, microfone, bola. Ex.: `{"t": 12.0, "pose": "erguer", "prop": "espada"}`; tirar: `"prop": null`.
-- **Camadas de um figurino novo** (em `COSTUMES` no sam-engine.js): `back` (capa), `lower` (saia,
-  vestido, short), `torso`, `front` (gola, colar, faixa), `hatBack` (penas atrás da cabeça), `face`
-  (barba/bigode), `hat` (chapéu/coroa), `sleeve` (cor da manga), `boot` (calçado).
-- **Regra de respeito:** o Sam não interpreta pessoas escravizadas nem vítimas de tragédias; nessas
-  cenas a pintura fica sozinha (ou o Sam aparece sério como narrador), sem gag.
+
+### 5.1 Guarda-roupa: 97 figurinos prontos
+Use o nome em `"figurino"` (ex.: `"figurino": "legionario"`). Galeria: `galeria-figurinos.jpg` (todos numa
+imagem), `galeria-1.jpg` … `galeria-4.jpg` (maiores) ou o botão "Ver galeria de figurinos no palco" no studio.
+- **Sam e Brasil (19):** eua (abertura/voto), padrao, capitao (explorador/Cabral), tupi, colono, frances, nobre, garimpeiro, rei, imperador, uniforme_imperial (Pedro I), militar, pedro_ii, princesa, presidente, presidente_fedora, jogador, carnaval, turista.
+- **Antiguidade (16):** homem_das_cavernas, farao, egipcio, rainha_egipcia, hoplita, espartano, filosofo, atleta_grego, alexandre, legionario, centuriao, senador, imperador_romano, gladiador, godo, gaules.
+- **Idade Média (10):** viking, viking_mito (capacete com chifres = o mito; use com carimbo MYTH), cavaleiro, cruzado, joana_darc, rainha, campones, monge, bispo (santos e bispos: Nicolau, Patrício, Valentim), bobo_da_corte.
+- **Ásia (11):** samurai, ninja, shogun, kimono, imperador_chines, mandarim, soldado_terracota, mongol, maraja, indiano, jogador_criquete.
+- **Américas (13):** asteca (governante histórico, sem piada), conquistador, puritano, pai_fundador, casaca_vermelha, cowboy, xerife, pioneiro, soldado_mexicano, charro, revolucionario_mexicano, soldado_uniao, confederado.
+- **Europa moderna (15):** guarda_real, rei_frances, maria_antonieta, revolucionario, napoleao, cavalheiro_vitoriano, dama_vitoriana, rainha_vitoria, czar, czar_sem_barba (Pedro, o Grande e o imposto da barba), russo, detetive, pirata, barba_negra, rainha_margherita.
+- **Datas comemorativas (1):** papai_noel (com bispo para São Nicolau).
+- **Século XX e hoje (12):** soldado_ww1, soldado_ww2, explorador_colonial, astronauta, cosmonauta, cientista, medico, chef, operario, formando, empresario, turista_americano.
+- **Trocar de figurino no meio da cena:** chave `{"t": 8.0, "figurino": "pirata"}` (combine com o efeito
+  `poeira` para a troca-relâmpago). A camisa `eua` só na abertura e no voto.
+
+### 5.2 Objetos de cena (38)
+- **Com as duas mãos** (use em `prop`, com pose `segurar` ou `segurar_mapa`): mapa, bateia, taca, livro, planta,
+  pergaminho, globo, bau, presente, pizza.
+- **Em pé na mão** (pose `segurar_lanca`): lanca, tridente, bandeira (cores com `propCores`, ex.:
+  `["#006847", "#ffffff", "#ce1126"]`), tocha, mosquete, guarda_chuva, cajado.
+- **Pendurados:** bengala, saco_dinheiro. **Escudos** (vão na mão esquerda): escudo, escudo_romano.
+- **Na mão, ao longo do antebraço** (poses `erguer`, `apontar`, `segurar_lanca`…): espada, katana, cetro,
+  machado, clava, pena, microfone, bola, lupa, telescopio, pao, xicara, laco, garrafa (genérica, sem
+  marca), coracao, flores, trevo.
+- **Chaves:** `prop` = mão direita (`"propMao": "L"` para a esquerda); `prop2` = 2º objeto, na mão
+  esquerda (`"propMao2": "R"` para a direita; `prop2` só aceita objeto de uma mão); `propRot` gira o
+  objeto de duas mãos (ex.: mapa de cabeça para baixo = 180); tirar: `"prop": null`.
+  Ex.: `{"t": 12.0, "pose": "erguer", "prop": "espada", "prop2": "escudo"}`.
+
+### 5.3 Figurino novo, montado por peças (sem mexer no código)
+No `episode.json`, em `"figurinos"`, dê um nome e escolha as peças; depois use o nome em `"figurino"`:
+```json
+"figurinos": {
+  "chaucer": {"tronco": {"tipo": "liso", "cor": "#5a2a6b"}, "frente": [{"tipo": "cinto"}],
+              "chapeu": {"tipo": "touca", "cor": "#2b2b3a"}, "rosto": [{"tipo": "barba", "estilo": "cavanhaque"}]}
+}
+```
+- `tronco` {tipo, cor, cor2, cor3, emblema, colunas}: liso, listras_h, listras_v, xadrez, colete, terno, uniforme, toga, armadura, cota_malha, tabardo, kimono, kaftan, pele, jaleco, macacao, sem_camisa, espacial, lantejoula, arlequim.
+  (`uniforme`: `colunas` 1 ou 2 e `cor3` = gola; `tabardo`: `emblema` cruz, chevron ou leao.)
+- `frente` (lista) {tipo, cor, cor2, cores}: gravata, gravata_borboleta, bandana, rufo, arminho, colar, perolas, faixa, medalha, estrela_xerife, dragonas, cinto_cruzado, cinto, botoes, cruz, peitoral, ombreiras, colar_egipcio, franjas, kamishimo, emblema_quadrado, estetoscopio, lenco_pescoco, gola_puritana, cartucheira, pele_branca, gola_alta.
+- `baixo` {tipo, cor, cor2}: saia_curta, shendyt, kilt, vestido, manto_longo, hakama, short, saia_fibra.
+- `costas` {tipo, cor, borda}: capa, capa_curta (`borda`: arminho, penas, ouro ou pele).
+- `chapeu` {tipo, cor, cor2, estilo}: coroa, tiara, louros, elmo_romano, elmo_grego, elmo_viking, kabuto, nemes, turbante, mianguan, chapeu_qing, cowboy, sombrero, cartola, coco, tricorne, bicorne, quepe, shako, capacete_colonial, boina, fez, gorro_frigio, gorro_pele, ushanka, mongol, capacete_astronauta, chef, capelo, capacete_obra, bandana_pirata, elmo_cavaleiro, morion, touca, peruca_colonial, pele_urso, capacete_ww1, capacete_ww2, bone, fita, capuz_ninja, capuz_monge, bobo, eboshi, topi, deerstalker, gorro_noel, mitra, capotain, cocar_asteca, peruca_alta, chapeu_palha, chapeu_explorador, chapeu_garimpeiro, chapeu_pluma, fedora, cocar_tupi, cocar_carnaval.
+  Estilos: coroa `fechada`/`pequena`; elmo_romano `legionario`/`centuriao`/`gladiador`; elmo_viking
+  `chifres` (o mito); turbante `maraja`; tricorne `pirata`.
+- `rosto` (lista) {tipo, cor, estilo}: barba, bigode, tapa_olho, oculos, oculos_sol, monoculo, cabelo. Barba: `cheia`, `curta`, `cavanhaque`
+  (com `cor`) ou `longa` (sempre branca, estilo Pedro II). Bigode: `grande`, `fino`, `guidao`.
+  Cabelo (`{"tipo": "cabelo", "estilo": …}`): longo, chanel, coque, rabo.
+- `manga` (cor da manga ou `null` = braço de fora), `bota` (cor do calçado), `bracos`: `"preto"` (padrão) ou `"branco"`.
+- O studio confere as peças e avisa (⚠) se algum nome não existir.
+
+### 5.4 Respeito e efeitos sonoros
+- **Regra de respeito:** o Sam não interpreta pessoas escravizadas nem vítimas de tragédias, e não usa
+  trajes sagrados de povos indígenas como fantasia; nessas cenas a pintura fica sozinha (ou o Sam
+  aparece sério como narrador), sem gag.
 - **SFX:** whoosh, whoosh_leve, zip, bonk, pop, tick, ding, tink, blip, thud, clank, coro, grilos, passo.
 
 ## 6. Prompt das pinturas A5 SEM o Sam (colar em toda cena)
@@ -158,8 +201,7 @@ marco do lugar no terço central, paleta da era repetida no episódio.
   lenta, sem SFX cômico.
 - Final de todo episódio: o Sam olha para a câmera (deadpan) + voto de 3 opções.
 
-## 8. Próximas melhorias do studio (v6.2+)
-- Figurante animado (2º boneco com figurino) para diálogos/cabo de guerra.
-- Figurinos de outros temas (soldado romano, faraó, cowboy, samurai...): adicionar quando o tema for escolhido.
-- Mais objetos (pergaminho, xícara de café, tocha).
+## 8. Próximas melhorias do studio (v6.3+)
+- Figurante animado (2º boneco com figurino) para diálogos e cabo de guerra.
 - Mapa com mais regiões (Europa detalhada, Ásia oriental, EUA por estados).
+- Mais cabelos e rostos (tranças, careca, perucas coloridas) quando um episódio pedir.

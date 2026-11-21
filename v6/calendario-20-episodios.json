@@ -1,0 +1,1923 @@
+{
+ "canal": "Sam Ruins History",
+ "idioma_do_video": "en-US",
+ "studio": "Sam Studio v6.2",
+ "publicacao": "1 episódio longo por sábado 12:00 America/Fortaleza (15:00 UTC) + corte vertical de 2 min no TikTok e no Facebook durante a semana",
+ "regras": [
+  "Voto: todo episódio termina com 3 opções = o tema previsto para o próximo sábado + os 2 seguintes da lista (as edições especiais ficam fora, porque têm data fixa). O comentário fixado repete o voto. O voto fecha na segunda-feira às 12:00. Se ganhar outro tema, ele troca de data com o previsto. Sem votos ou empate: vale a ordem do plano. (As opções abaixo já seguem essa regra; se a ordem mudar, recalcule.)",
+  "Antes de uma edição especial, o episódio anuncia “Next week: [special]” e o voto vale para o sábado depois da especial. A especial não tem voto: termina com “Next Saturday: [vencedor]”.",
+  "Produção: o roteiro dos 3 temas do voto aberto pode ser adiantado; pinturas, narração e render de terça a sexta; o Timothy aprova na sexta e o vídeo é agendado para sábado 12:00. Especiais e remasters: produzir com 2 semanas de antecedência.",
+  "Fatos: a lista de cada episódio é o ponto de partida. Conferir cada fato em fonte confiável antes de narrar; o que não se confirmar sai. Piada nunca inventa fato.",
+  "Tom: cenas sérias sem gag (escravidão, guerras, fomes, epidemias, povos indígenas). O Sam não interpreta pessoas escravizadas nem vítimas, e não usa trajes sagrados de povos indígenas como fantasia (ex.: o cocar de guerra das Planícies). Sem política atual: episódios de países terminam em marcos históricos, de forma neutra.",
+  "Marcas: o nome pode ir no título e na narração; nas imagens, nada de logotipo nem letreiro.",
+  "Figurinos e objetos: todos os nomes abaixo existem no studio v6.2 (97 figurinos, 38 objetos). Para um personagem novo, montar por peças em `\"figurinos\"` no episode.json (README do v6, seção Guarda-roupa).",
+  "Gag recorrente: os vikings aparecem em Vikings, Russia, The UK e Ireland (“The Vikings. Again.”).",
+  "Variedade proposital: países, datas comemorativas dos EUA e temas misturados aumentam o alcance e evitam cara de “conteúdo repetitivo” (regra de monetização do YouTube).",
+  "Nada é postado sem a aprovação explícita do Timothy."
+ ],
+ "episodios": [
+  {
+   "n": 1,
+   "data": "2026-11-28",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2026-11-28T15:00:00Z",
+   "tema": "BRAZIL",
+   "tipo": "remaster",
+   "nota": "v6 com a narração que já existe",
+   "titulo": "The Entire History of Brazil (Funny Animated)",
+   "titulos_alternativos": [
+    "Brazil Was Founded by Accident"
+   ],
+   "gancho": "It's huge, it speaks Portuguese, and it was founded completely by accident.",
+   "tese": "o Brasil sempre improvisou",
+   "refrao": "So Brazil improvised.",
+   "fatos_para_checar": [
+    "Roteiro e narração prontos (exemplos/roteiro-brazil-longo.md e roteiro-brazil-curto-2min.md)."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "tupi",
+     "papel": null
+    },
+    {
+     "figurino": "capitao",
+     "papel": "Cabral, 1500"
+    },
+    {
+     "figurino": "colono",
+     "papel": null
+    },
+    {
+     "figurino": "frances",
+     "papel": "França Antártica, 1555"
+    },
+    {
+     "figurino": "nobre",
+     "papel": null
+    },
+    {
+     "figurino": "garimpeiro",
+     "papel": "o ouro"
+    },
+    {
+     "figurino": "rei",
+     "papel": "Dom João VI, 1808"
+    },
+    {
+     "figurino": "uniforme_imperial",
+     "papel": "Pedro I, 1822"
+    },
+    {
+     "figurino": "imperador",
+     "papel": null
+    },
+    {
+     "figurino": "pedro_ii",
+     "papel": null
+    },
+    {
+     "figurino": "princesa",
+     "papel": "Isabel, 1888"
+    },
+    {
+     "figurino": "militar",
+     "papel": "a República, 1889"
+    },
+    {
+     "figurino": "presidente",
+     "papel": "Vargas"
+    },
+    {
+     "figurino": "presidente_fedora",
+     "papel": "JK e Brasília"
+    },
+    {
+     "figurino": "jogador",
+     "papel": null
+    },
+    {
+     "figurino": "carnaval",
+     "papel": null
+    },
+    {
+     "figurino": "turista",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "machado",
+    "bateia",
+    "cetro",
+    "espada",
+    "livro",
+    "pena",
+    "microfone",
+    "planta",
+    "taca"
+   ],
+   "cuidado": "Escravidão e povos indígenas: cenas sérias, sem gag; o Sam não interpreta pessoas escravizadas.",
+   "pinturas_a5": [
+    "As 25 cenas A5 já pedidas (02–25; a 03 e a 04 já estão prontas)."
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2026-12-05",
+    "fecha": "2026-11-30T12:00-03:00",
+    "opcoes": [
+     "Rome",
+     "India",
+     "Texas"
+    ]
+   },
+   "thumbnail": "Sam de Pedro I com a espada erguida + BRAZIL"
+  },
+  {
+   "n": 2,
+   "data": "2026-12-05",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2026-12-05T15:00:00Z",
+   "tema": "ANCIENT ROME",
+   "tipo": "novo",
+   "nota": null,
+   "titulo": "The Entire History of Rome (Funny Animated)",
+   "titulos_alternativos": [
+    "Rome Hated Kings So Much It Invented Emperors"
+   ],
+   "gancho": "According to legend, Rome was founded by two brothers raised by a wolf. Then it hated kings for almost 500 years, and quietly got one anyway.",
+   "tese": "Roma jurava que não tinha rei",
+   "refrao": "But definitely not a king.",
+   "fatos_para_checar": [
+    "Rômulo, Remo e a loba são lenda (contar como lenda).",
+    "República de 509 a.C. a 27 a.C.: quase 500 anos sem rei.",
+    "Júlio César nunca foi imperador (foi ditador); Augusto foi o 1º imperador e evitou o título de rei.",
+    "“Et tu, Brute?” é do Shakespeare, não de um registro romano.",
+    "Nero não tocou violino enquanto Roma queimava (64 d.C.): o violino não existia e ele estava em Âncio quando o fogo começou.",
+    "Vomitorium era o corredor de saída do anfiteatro, não um lugar para vomitar.",
+    "Gladiadores nem sempre lutavam até a morte; o gesto do polegar para baixo é incerto.",
+    "“César” virou palavra para imperador (Kaiser, Czar).",
+    "O Império do Ocidente caiu em 476; o do Oriente durou até 1453 (Constantinopla)."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "campones",
+     "papel": "Rômulo, o pastor"
+    },
+    {
+     "figurino": "rei",
+     "papel": "os 7 reis"
+    },
+    {
+     "figurino": "senador",
+     "papel": "a República"
+    },
+    {
+     "figurino": "legionario",
+     "papel": null
+    },
+    {
+     "figurino": "centuriao",
+     "papel": null
+    },
+    {
+     "figurino": "gladiador",
+     "papel": null
+    },
+    {
+     "figurino": "imperador_romano",
+     "papel": "César, Augusto, Nero"
+    },
+    {
+     "figurino": "godo",
+     "papel": "Odoacro, 476"
+    }
+   ],
+   "objetos": [
+    "lanca",
+    "escudo_romano",
+    "espada",
+    "pergaminho",
+    "tridente"
+   ],
+   "cuidado": null,
+   "pinturas_a5": [
+    "Palatine Hill above the Tiber river at dawn, 753 BC, simple huts",
+    "Roman Forum with temples and columns, busy market far away",
+    "Roman Senate house interior with marble benches",
+    "Roman legion camp with tents and standards",
+    "Snowy Alpine pass with tiny elephants far away, 218 BC",
+    "Colosseum arena with sand floor, crowd far away",
+    "Rome street with tall apartment blocks and shops",
+    "Rome burning at night seen from a hill, 64 AD",
+    "Constantinople skyline with walls and domes",
+    "Ruins of the Roman Forum today, tourists far away"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2026-12-12",
+    "fecha": "2026-12-07T12:00-03:00",
+    "opcoes": [
+     "Texas",
+     "India",
+     "Egypt"
+    ]
+   },
+   "thumbnail": "Sam de imperador romano com louros, deadpan + ROME"
+  },
+  {
+   "n": 3,
+   "data": "2026-12-12",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2026-12-12T15:00:00Z",
+   "tema": "TEXAS",
+   "tipo": "novo",
+   "nota": null,
+   "titulo": "The Entire History of Texas (Funny Animated)",
+   "titulos_alternativos": [
+    "Texas Was Its Own Country (And Never Got Over It)"
+   ],
+   "gancho": "Texas has flown six flags, was its own country for almost ten years, and still acts like it.",
+   "tese": "o Texas nunca deixou de se achar um país",
+   "refrao": "Everything is bigger in Texas. Including the drama.",
+   "fatos_para_checar": [
+    "Seis bandeiras: Espanha, França, México, República do Texas, Confederação e EUA.",
+    "República do Texas: 1836–1845.",
+    "Os defensores do Álamo (1836) vinham de vários estados e países, incluindo tejanos.",
+    "A batalha de San Jacinto durou cerca de 18 minutos (“Remember the Alamo!”).",
+    "Pela resolução de anexação (1845), o Texas pode se dividir em até 5 estados, com o próprio consentimento.",
+    "O Texas não pode se separar legalmente (Texas v. White, 1869).",
+    "Juneteenth: 19/06/1865, em Galveston (cena séria, sem gag).",
+    "Spindletop (1901) começou o boom do petróleo.",
+    "A frase real da Apollo 13 (1970) foi “Houston, we've had a problem”."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "conquistador",
+     "papel": "Espanha, 1519"
+    },
+    {
+     "figurino": "frances",
+     "papel": "La Salle, 1685"
+    },
+    {
+     "figurino": "soldado_mexicano",
+     "papel": "o exército de Santa Anna"
+    },
+    {
+     "figurino": "pioneiro",
+     "papel": "Davy Crockett no Álamo"
+    },
+    {
+     "figurino": "cowboy",
+     "papel": "as boiadas"
+    },
+    {
+     "figurino": "xerife",
+     "papel": "Texas Rangers"
+    },
+    {
+     "figurino": "confederado",
+     "papel": "Guerra Civil, tom sério"
+    },
+    {
+     "figurino": "operario",
+     "papel": "petróleo, 1901"
+    },
+    {
+     "figurino": "astronauta",
+     "papel": "Houston"
+    },
+    {
+     "figurino": "empresario",
+     "papel": "o dinheiro do petróleo"
+    }
+   ],
+   "objetos": [
+    "mosquete",
+    "bandeira",
+    "laco",
+    "saco_dinheiro"
+   ],
+   "cuidado": "Escravidão, Guerra Civil e Juneteenth com tom sério.",
+   "pinturas_a5": [
+    "Texas Gulf coast with Spanish ships, 1519",
+    "Spanish mission with an adobe church in the desert",
+    "The Alamo mission at dusk, 1836",
+    "San Jacinto grassy battlefield by a bayou",
+    "Cattle drive on an open prairie trail",
+    "Dusty frontier town main street",
+    "Spindletop oil gusher and wooden derricks, 1901",
+    "Mission control room with big screens, 1970",
+    "Texas State Capitol in Austin today"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": "Christmas special",
+    "decide": "2026-12-26",
+    "fecha": "2026-12-14T12:00-03:00",
+    "opcoes": [
+     "India",
+     "Egypt",
+     "Vikings"
+    ]
+   },
+   "thumbnail": "Sam de cowboy com laço + TEXAS"
+  },
+  {
+   "n": 4,
+   "data": "2026-12-19",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2026-12-19T15:00:00Z",
+   "tema": "CHRISTMAS",
+   "tipo": "especial",
+   "nota": "edição especial de Natal (data fixa)",
+   "titulo": "The Entire History of Christmas (Funny Animated)",
+   "titulos_alternativos": [
+    "Christmas Is History's Biggest Remix"
+   ],
+   "gancho": "Christmas is a birthday, a winter festival, a Victorian makeover and a shopping season, all at once.",
+   "tese": "todo mundo foi adicionando coisa",
+   "refrao": "And everyone just added more stuff.",
+   "fatos_para_checar": [
+    "A data de 25/12 não aparece na Bíblia.",
+    "A Saturnália romana era a festa de dezembro com presentes.",
+    "São Nicolau de Mira (séc. IV) inspirou o Papai Noel.",
+    "O Natal foi proibido em Massachusetts (1659–1681).",
+    "Primeiro cartão de Natal comercial e “A Christmas Carol” (Dickens): ambos de 1843, em Londres.",
+    "A gravura da árvore de Victoria e Albert (1848) popularizou a árvore de Natal.",
+    "Trégua de Natal de 1914: cena séria e tocante, sem gag.",
+    "Rudolph foi criado em 1939 para uma loja de departamentos.",
+    "A Coca-Cola não inventou o Papai Noel de vermelho (os anúncios são de 1931; o vermelho já existia).",
+    "“Xmas”: o X é a letra grega Chi."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "imperador_romano",
+     "papel": "Saturnália"
+    },
+    {
+     "figurino": "bispo",
+     "papel": "São Nicolau"
+    },
+    {
+     "figurino": "campones",
+     "papel": "festa medieval"
+    },
+    {
+     "figurino": "puritano",
+     "papel": "a proibição"
+    },
+    {
+     "figurino": "cavalheiro_vitoriano",
+     "papel": "Dickens"
+    },
+    {
+     "figurino": "rainha_vitoria",
+     "papel": "a árvore de 1848"
+    },
+    {
+     "figurino": "soldado_ww1",
+     "papel": "a trégua, tom sério"
+    },
+    {
+     "figurino": "papai_noel",
+     "papel": null
+    },
+    {
+     "figurino": "empresario",
+     "papel": "as compras"
+    }
+   ],
+   "objetos": [
+    "presente",
+    "cajado",
+    "livro",
+    "xicara",
+    "garrafa"
+   ],
+   "cuidado": "Respeito às religiões: contar a história da festa, sem piada com figuras sagradas. Garrafa sem marca.",
+   "pinturas_a5": [
+    "Roman street during Saturnalia with lanterns",
+    "Ancient church in Myra, 4th century",
+    "Medieval village feast in a snowy square",
+    "Puritan meeting house in colonial Massachusetts in winter",
+    "Victorian London snowy street with shops",
+    "Victorian royal parlor with a decorated Christmas tree",
+    "WWI no-man's land with snow and barbed wire, no people",
+    "1950s department store with toys and lights",
+    "Cozy living room with a tree today"
+   ],
+   "fim": {
+    "tipo": "sem_voto",
+    "texto": "Sem voto. Termina com: “Next Saturday: [o vencedor do último voto]”."
+   },
+   "thumbnail": "Sam de Papai Noel deadpan + CHRISTMAS"
+  },
+  {
+   "n": 5,
+   "data": "2026-12-26",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2026-12-26T15:00:00Z",
+   "tema": "INDIA",
+   "tipo": "novo",
+   "nota": "opção do voto do Brasil",
+   "titulo": "The Entire History of India (Funny Animated)",
+   "titulos_alternativos": [
+    "India Was the World's Richest Neighborhood"
+   ],
+   "gancho": "India gave the world chess, shampoo, and the number zero as we use it.",
+   "tese": "todo mundo quis morar no bairro mais rico",
+   "refrao": "And India absorbed them too.",
+   "fatos_para_checar": [
+    "Vale do Indo (Mohenjo-daro, ~2500 a.C.): cidades planejadas com esgoto.",
+    "O xadrez nasceu do chaturanga indiano.",
+    "Chutes and Ladders (Cobras e Escadas) veio do jogo indiano moksha patam.",
+    "A palavra “shampoo” vem do hindi.",
+    "Brahmagupta (628 d.C.) escreveu regras para o zero.",
+    "Colombo procurava a Índia: por isso “índios” nas Américas.",
+    "O Taj Mahal é um mausoléu, não um palácio.",
+    "Vitória virou Imperatriz da Índia em 1876; independência em 1947."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "campones",
+     "papel": "o Vale do Indo"
+    },
+    {
+     "figurino": "maraja",
+     "papel": "impérios e cortes"
+    },
+    {
+     "figurino": "mongol",
+     "papel": "Babur, descendente de Gengis Khan"
+    },
+    {
+     "figurino": "casaca_vermelha",
+     "papel": "Companhia das Índias"
+    },
+    {
+     "figurino": "rainha_vitoria",
+     "papel": "Imperatriz da Índia"
+    },
+    {
+     "figurino": "indiano",
+     "papel": "independência, 1947"
+    },
+    {
+     "figurino": "cientista",
+     "papel": "o zero"
+    },
+    {
+     "figurino": "jogador_criquete",
+     "papel": "o críquete ficou"
+    }
+   ],
+   "objetos": [
+    "cetro",
+    "xicara",
+    "livro",
+    "bandeira",
+    "bola"
+   ],
+   "cuidado": "Religiões com respeito, sem retratar figuras religiosas; a Partição de 1947 com tom sério.",
+   "pinturas_a5": [
+    "Indus Valley brick city with a great bath",
+    "Ancient Indian palace courtyard, elephants far away",
+    "Mughal court with arches and carpets",
+    "Taj Mahal at sunrise with the reflecting pool",
+    "East India Company port with tall ships, 1700s",
+    "Tea plantation hills in Assam",
+    "Delhi celebration in 1947, crowd far away",
+    "Mumbai street and skyline today"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-01-02",
+    "fecha": "2026-12-28T12:00-03:00",
+    "opcoes": [
+     "Egypt",
+     "Vikings",
+     "China"
+    ]
+   },
+   "thumbnail": "Sam de marajá + INDIA"
+  },
+  {
+   "n": 6,
+   "data": "2027-01-02",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2027-01-02T15:00:00Z",
+   "tema": "ANCIENT EGYPT",
+   "tipo": "remaster",
+   "nota": "roteiro v5.1 existe (tese “o rio”); refazer no v6",
+   "titulo": "The Entire History of Egypt (Funny Animated)",
+   "titulos_alternativos": [],
+   "gancho": "(do roteiro v5.1)",
+   "tese": "o rio",
+   "refrao": "(do roteiro v5.1)",
+   "fatos_para_checar": [
+    "Trocar o voto final do roteiro antigo pelo voto atual.",
+    "Conferir no roteiro: Cleópatra viveu mais perto do pouso na Lua do que da construção da Grande Pirâmide; os construtores das pirâmides eram trabalhadores pagos; Napoleão não destruiu o nariz da Esfinge."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "farao",
+     "papel": null
+    },
+    {
+     "figurino": "egipcio",
+     "papel": null
+    },
+    {
+     "figurino": "rainha_egipcia",
+     "papel": "Cleópatra"
+    },
+    {
+     "figurino": "legionario",
+     "papel": null
+    },
+    {
+     "figurino": "imperador_romano",
+     "papel": "César e Augusto"
+    },
+    {
+     "figurino": "napoleao",
+     "papel": "1798, a Pedra de Roseta"
+    },
+    {
+     "figurino": "explorador_colonial",
+     "papel": "Howard Carter, 1922"
+    },
+    {
+     "figurino": "turista",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "cetro",
+    "pergaminho",
+    "lupa",
+    "lanca"
+   ],
+   "cuidado": null,
+   "pinturas_a5": [
+    "As cenas do roteiro v5.1, refeitas no prompt A5 sem o Sam."
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-01-09",
+    "fecha": "2027-01-04T12:00-03:00",
+    "opcoes": [
+     "Vikings",
+     "China",
+     "The USA"
+    ]
+   },
+   "thumbnail": "Sam de faraó + EGYPT"
+  },
+  {
+   "n": 7,
+   "data": "2027-01-09",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2027-01-09T15:00:00Z",
+   "tema": "VIKINGS",
+   "tipo": "novo",
+   "nota": null,
+   "titulo": "The Entire History of the Vikings (Funny Animated)",
+   "titulos_alternativos": [
+    "Vikings Didn't Wear Horned Helmets"
+   ],
+   "gancho": "Vikings didn't wear horned helmets, combed their hair a lot, and reached America 500 years before Columbus.",
+   "tese": "comerciantes que às vezes esqueciam de comerciar",
+   "refrao": "Then they got back in the boat.",
+   "fatos_para_checar": [
+    "O capacete com chifres é invenção do séc. XIX (arte romântica e figurinos de ópera): figurino viking_mito + carimbo MYTH.",
+    "“Viking” era uma atividade (sair em expedição), não um povo.",
+    "Pentes estão entre os achados mais comuns; um cronista inglês (John of Wallingford) reclamou que os dinamarqueses tomavam banho todo sábado.",
+    "Ataque a Lindisfarne: 793.",
+    "Leif Erikson chegou à Terra Nova (L'Anse aux Meadows) por volta do ano 1000; nos EUA, 9 de outubro é o Leif Erikson Day.",
+    "Cnut foi rei da Inglaterra, da Dinamarca e da Noruega.",
+    "Os normandos de 1066 descendiam de vikings.",
+    "Thursday = dia de Thor; Wednesday = dia de Woden (Odin)."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "viking",
+     "papel": null
+    },
+    {
+     "figurino": "viking_mito",
+     "papel": "o mito do chifre"
+    },
+    {
+     "figurino": "monge",
+     "papel": "o cronista que escreveu a fama deles"
+    },
+    {
+     "figurino": "campones",
+     "papel": "colonos na Islândia"
+    },
+    {
+     "figurino": "rei",
+     "papel": "Cnut"
+    },
+    {
+     "figurino": "cavaleiro",
+     "papel": "os normandos, 1066"
+    }
+   ],
+   "objetos": [
+    "machado",
+    "escudo",
+    "bau",
+    "lanca",
+    "pena"
+   ],
+   "cuidado": "Saques sem violência na tela: mostrar os navios chegando e o monge escrevendo a “avaliação de 1 estrela”.",
+   "pinturas_a5": [
+    "Norwegian fjord with longships at dawn",
+    "Lindisfarne monastery on a rocky island, 793, no people",
+    "Viking market town with wooden houses",
+    "Longship on a stormy sea",
+    "Iceland coast with turf houses",
+    "Greenland fjord settlement",
+    "Newfoundland shore with sod huts, around 1000",
+    "Hastings battlefield on a hill, 1066, armies far away",
+    "Viking ship museum hall today"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-01-16",
+    "fecha": "2027-01-11T12:00-03:00",
+    "opcoes": [
+     "China",
+     "The USA",
+     "Mexico"
+    ]
+   },
+   "thumbnail": "Sam de viking_mito com carimbo MYTH + VIKINGS"
+  },
+  {
+   "n": 8,
+   "data": "2027-01-16",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2027-01-16T15:00:00Z",
+   "tema": "CHINA",
+   "tipo": "novo",
+   "nota": null,
+   "titulo": "The Entire History of China (Funny Animated)",
+   "titulos_alternativos": [
+    "China Invented Everything, Then Built a Wall"
+   ],
+   "gancho": "China invented paper, the compass, gunpowder and printing, and built a wall you can't see from space.",
+   "tese": "o ciclo das dinastias",
+   "refrao": "And the cycle started again.",
+   "fatos_para_checar": [
+    "As Quatro Grandes Invenções: papel, bússola, pólvora e impressão.",
+    "Qin Shi Huang unificou a China (221 a.C.); o exército de terracota tem cerca de 8.000 soldados.",
+    "A Muralha não é visível a olho nu do espaço.",
+    "Papel-moeda e papel higiênico (registro do séc. VI) são invenções chinesas.",
+    "O nome “Rota da Seda” só foi criado em 1877, por um geógrafo alemão.",
+    "Marco Polo não levou o macarrão para a Itália.",
+    "O biscoito da sorte foi inventado nos EUA.",
+    "O último imperador, Puyi, abdicou em 1912, com 6 anos."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "imperador_chines",
+     "papel": null
+    },
+    {
+     "figurino": "soldado_terracota",
+     "papel": null
+    },
+    {
+     "figurino": "campones",
+     "papel": null
+    },
+    {
+     "figurino": "mandarim",
+     "papel": "os exames imperiais"
+    },
+    {
+     "figurino": "mongol",
+     "papel": "Kublai Khan"
+    },
+    {
+     "figurino": "nobre",
+     "papel": "Marco Polo"
+    },
+    {
+     "figurino": "cientista",
+     "papel": "as invenções"
+    },
+    {
+     "figurino": "turista",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "pergaminho",
+    "lanca",
+    "livro",
+    "saco_dinheiro"
+   ],
+   "cuidado": "Terminar em 1912 (fim do império) com uma imagem de hoje, sem política atual.",
+   "pinturas_a5": [
+    "Yellow River valley with early farms",
+    "Qin palace courtyard with banners",
+    "Terracotta army pit with rows of statues",
+    "Great Wall winding over green mountains",
+    "Silk Road camel caravan in the desert",
+    "Tang dynasty capital Chang'an with a wide avenue",
+    "Mongol camp with yurts on the steppe",
+    "Forbidden City in Beijing, Ming dynasty",
+    "Shanghai skyline today"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-01-23",
+    "fecha": "2027-01-18T12:00-03:00",
+    "opcoes": [
+     "The USA",
+     "Mexico",
+     "Coca-Cola"
+    ]
+   },
+   "thumbnail": "Sam de imperador chinês + CHINA"
+  },
+  {
+   "n": 9,
+   "data": "2027-01-23",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2027-01-23T15:00:00Z",
+   "tema": "THE USA",
+   "tipo": "remaster",
+   "nota": "roteiro v3 existe (versão boneco); refazer no v6",
+   "titulo": "The Entire History of the USA (Funny Animated)",
+   "titulos_alternativos": [],
+   "gancho": "(do roteiro v3)",
+   "tese": "(do roteiro v3)",
+   "refrao": "(do roteiro v3)",
+   "fatos_para_checar": [
+    "Trocar o voto final do roteiro antigo pelo voto atual.",
+    "Conferir no roteiro: a maior parte da Declaração foi assinada em 2 de agosto de 1776; os dentes de Washington não eram de madeira; Paul Revere não gritou “The British are coming!”; os peregrinos não usavam fivela no chapéu (imagem do séc. XIX) — o puritano do studio tem fivela: gag com carimbo MYTH."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "puritano",
+     "papel": "os peregrinos, 1620"
+    },
+    {
+     "figurino": "pai_fundador",
+     "papel": null
+    },
+    {
+     "figurino": "casaca_vermelha",
+     "papel": null
+    },
+    {
+     "figurino": "pioneiro",
+     "papel": null
+    },
+    {
+     "figurino": "cowboy",
+     "papel": null
+    },
+    {
+     "figurino": "soldado_uniao",
+     "papel": null
+    },
+    {
+     "figurino": "confederado",
+     "papel": "tom sério"
+    },
+    {
+     "figurino": "operario",
+     "papel": null
+    },
+    {
+     "figurino": "soldado_ww2",
+     "papel": null
+    },
+    {
+     "figurino": "astronauta",
+     "papel": null
+    },
+    {
+     "figurino": "empresario",
+     "papel": null
+    },
+    {
+     "figurino": "turista_americano",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "pergaminho",
+    "mosquete",
+    "bandeira",
+    "laco",
+    "saco_dinheiro"
+   ],
+   "cuidado": "Escravidão, Guerra Civil e povos indígenas com tom sério; política atual fora.",
+   "pinturas_a5": [
+    "As cenas do roteiro v3, refeitas no prompt A5 sem o Sam."
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-01-30",
+    "fecha": "2027-01-25T12:00-03:00",
+    "opcoes": [
+     "Mexico",
+     "Coca-Cola",
+     "Russia"
+    ]
+   },
+   "thumbnail": "Sam com a camisa dos EUA segurando o pergaminho + THE USA"
+  },
+  {
+   "n": 10,
+   "data": "2027-01-30",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2027-01-30T15:00:00Z",
+   "tema": "MEXICO",
+   "tipo": "novo",
+   "nota": null,
+   "titulo": "The Entire History of Mexico (Funny Animated)",
+   "titulos_alternativos": [
+    "Cinco de Mayo Isn't Mexico's Independence Day"
+   ],
+   "gancho": "Mexico City was built on a lake, chocolate started as a bitter drink in ancient Mexico, and Cinco de Mayo isn't Independence Day.",
+   "tese": "o México sempre constrói em cima do anterior",
+   "refrao": "And they built on top of it.",
+   "fatos_para_checar": [
+    "Tenochtitlan foi construída numa ilha do lago Texcoco (1325); a Cidade do México ainda afunda por causa disso.",
+    "Cacau, tomate, baunilha e milho vieram da Mesoamérica.",
+    "A ideia de que os astecas acharam que Cortés era um deus é contestada pelos historiadores.",
+    "Independência: 16 de setembro (Grito de Dolores, 1810); o 5 de maio é a batalha de Puebla (1862).",
+    "Guerra EUA–México (1846–1848): o México perdeu cerca de metade do território (tom sério, sem piada contra nenhum lado).",
+    "Revolução Mexicana: 1910.",
+    "O taco al pastor foi inspirado no shawarma de imigrantes libaneses."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "asteca",
+     "papel": "Moctezuma II"
+    },
+    {
+     "figurino": "conquistador",
+     "papel": "Cortés, 1519"
+    },
+    {
+     "figurino": "campones",
+     "papel": null
+    },
+    {
+     "figurino": "soldado_mexicano",
+     "papel": "Puebla, 1862"
+    },
+    {
+     "figurino": "charro",
+     "papel": null
+    },
+    {
+     "figurino": "revolucionario_mexicano",
+     "papel": "1910"
+    },
+    {
+     "figurino": "presidente",
+     "papel": null
+    },
+    {
+     "figurino": "chef",
+     "papel": "a comida"
+    },
+    {
+     "figurino": "turista",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "lanca",
+    "mosquete",
+    "bandeira",
+    "xicara"
+   ],
+   "cuidado": "Conquista e epidemias com tom sério; o cocar asteca só como traje do governante histórico, sem piada.",
+   "pinturas_a5": [
+    "Tenochtitlan on the lake with causeways and temples, 1500",
+    "Aztec market with colorful stalls",
+    "Spanish ships at the Veracruz beach, 1519",
+    "Colonial plaza with a cathedral",
+    "Small church of Dolores at night, 1810",
+    "Puebla hills with a fort, 1862",
+    "Revolution-era train in the desert, 1910",
+    "Teotihuacan pyramids at sunrise",
+    "Mexico City street today"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-02-06",
+    "fecha": "2027-02-01T12:00-03:00",
+    "opcoes": [
+     "Coca-Cola",
+     "Russia",
+     "The UK"
+    ]
+   },
+   "thumbnail": "Sam de revolucionário de sombrero + MEXICO"
+  },
+  {
+   "n": 11,
+   "data": "2027-02-06",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2027-02-06T15:00:00Z",
+   "tema": "COCA-COLA",
+   "tipo": "novo",
+   "nota": "história de marca",
+   "titulo": "The Entire History of Coca-Cola (Funny Animated)",
+   "titulos_alternativos": [
+    "Coca-Cola Started as Medicine"
+   ],
+   "gancho": "It was invented by a pharmacist, sold as medicine, and its name came from two of its ingredients.",
+   "tese": "um remédio que virou a bebida do planeta",
+   "refrao": "It was still just sugar water.",
+   "fatos_para_checar": [
+    "Criada em 1886 por John Pemberton, farmacêutico de Atlanta, e vendida como tônico.",
+    "O nome vem da folha de coca e da noz-de-cola; a cocaína da folha foi tirada da receita no início do séc. XX (citar de forma factual, sem piada de droga).",
+    "Asa Candler comprou a empresa e fez o marketing em massa.",
+    "Na 2ª Guerra, a empresa prometeu Coca a 5 centavos para os soldados americanos.",
+    "Os anúncios de Papai Noel de 1931: callback do episódio de Natal (o vermelho já existia).",
+    "A “New Coke” (1985) durou 79 dias.",
+    "A Coca nunca foi verde.",
+    "A fórmula guardada num cofre em Atlanta faz parte do marketing."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "medico",
+     "papel": "Pemberton, o farmacêutico"
+    },
+    {
+     "figurino": "empresario",
+     "papel": "Asa Candler"
+    },
+    {
+     "figurino": "operario",
+     "papel": "as engarrafadoras"
+    },
+    {
+     "figurino": "soldado_ww2",
+     "papel": "a Coca de 5 centavos"
+    },
+    {
+     "figurino": "papai_noel",
+     "papel": "os anúncios de 1931"
+    },
+    {
+     "figurino": "cientista",
+     "papel": "a fórmula secreta"
+    },
+    {
+     "figurino": "turista_americano",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "garrafa",
+    "saco_dinheiro",
+    "xicara",
+    "livro"
+   ],
+   "cuidado": "Nada de logotipo, letreiro ou garrafa com a marca nas imagens (garrafa genérica); só fatos verificáveis, sem atacar a empresa.",
+   "pinturas_a5": [
+    "1886 Atlanta pharmacy with glass jars",
+    "Soda fountain counter, 1890s",
+    "Bottling plant with a conveyor, 1910s",
+    "WWII supply depot with crates, no logos",
+    "1930s illustrator's studio with an easel",
+    "1985 corporate boardroom",
+    "Bank vault room with a big steel door",
+    "Supermarket drinks aisle today, generic bottles, no logos"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": "Valentine's Day special",
+    "decide": "2027-02-20",
+    "fecha": "2027-02-08T12:00-03:00",
+    "opcoes": [
+     "Russia",
+     "The UK",
+     "Pirates"
+    ]
+   },
+   "thumbnail": "Sam de jaleco com uma garrafa genérica + COCA-COLA"
+  },
+  {
+   "n": 12,
+   "data": "2027-02-13",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2027-02-13T15:00:00Z",
+   "tema": "VALENTINE'S DAY",
+   "tipo": "especial",
+   "nota": "edição especial (data fixa)",
+   "titulo": "The Entire History of Valentine's Day (Funny Animated)",
+   "titulos_alternativos": [
+    "Valentine's Day Is Named After a Saint Nobody Knows"
+   ],
+   "gancho": "Valentine's Day is named after a saint we barely know anything about.",
+   "tese": "um feriado montado de lendas",
+   "refrao": "And somehow, it worked.",
+   "fatos_para_checar": [
+    "Havia vários santos chamados Valentim; as histórias são lendas.",
+    "A ligação com a Lupercália romana é debatida (dizer “some historians think”).",
+    "Chaucer ligou o dia ao amor no séc. XIV.",
+    "Cupido vem da mitologia romana (Eros, na grega).",
+    "Esther Howland popularizou os cartões nos EUA (década de 1840).",
+    "Os corações de conversa (candy hearts) existem desde 1866."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "imperador_romano",
+     "papel": "Cláudio II, da lenda"
+    },
+    {
+     "figurino": "bispo",
+     "papel": "São Valentim"
+    },
+    {
+     "figurino": "nobre",
+     "papel": "Chaucer"
+    },
+    {
+     "figurino": "cavalheiro_vitoriano",
+     "papel": null
+    },
+    {
+     "figurino": "dama_vitoriana",
+     "papel": "Esther Howland"
+    },
+    {
+     "figurino": "empresario",
+     "papel": "o comércio"
+    },
+    {
+     "figurino": "turista",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "coracao",
+    "flores",
+    "pena",
+    "pergaminho"
+   ],
+   "cuidado": "Respeito à figura religiosa: o foco é como a data foi montada.",
+   "pinturas_a5": [
+    "Ancient Rome street in February",
+    "Small early church in Rome",
+    "Medieval English garden with birds in spring",
+    "Victorian parlor with lace cards on a table",
+    "1840s print shop in Massachusetts",
+    "1900s candy factory",
+    "Flower shop window today with paper hearts"
+   ],
+   "fim": {
+    "tipo": "sem_voto",
+    "texto": "Sem voto. Termina com: “Next Saturday: [o vencedor do último voto]”."
+   },
+   "thumbnail": "Sam de cavalheiro com flores, deadpan + VALENTINE'S"
+  },
+  {
+   "n": 13,
+   "data": "2027-02-20",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2027-02-20T15:00:00Z",
+   "tema": "RUSSIA",
+   "tipo": "novo",
+   "nota": null,
+   "titulo": "The Entire History of Russia (Funny Animated)",
+   "titulos_alternativos": [
+    "Russia Taxed Beards (Really)"
+   ],
+   "gancho": "Russia has eleven time zones and even more plot twists.",
+   "tese": "a Rússia sempre muda tudo de repente",
+   "refrao": "Russia: still cold.",
+   "fatos_para_checar": [
+    "Os primeiros governantes da Rus' eram varegues (vikings): gag recorrente dos vikings.",
+    "Os mongóis (Horda Dourada) dominaram a região por cerca de 240 anos.",
+    "Ivan IV foi o primeiro a ser coroado czar (1547).",
+    "Pedro, o Grande, criou um imposto sobre a barba (1698): figurino czar_sem_barba.",
+    "A Rússia vendeu o Alasca aos EUA em 1867 por US$ 7,2 milhões.",
+    "A história da morte de Rasputin é cheia de exageros.",
+    "Gagarin foi o primeiro humano no espaço (1961).",
+    "A Rússia tem 11 fusos horários."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "viking",
+     "papel": "os varegues"
+    },
+    {
+     "figurino": "mongol",
+     "papel": "a Horda Dourada"
+    },
+    {
+     "figurino": "czar",
+     "papel": "Ivan, o Terrível"
+    },
+    {
+     "figurino": "czar_sem_barba",
+     "papel": "Pedro, o Grande"
+    },
+    {
+     "figurino": "russo",
+     "papel": null
+    },
+    {
+     "figurino": "campones",
+     "papel": null
+    },
+    {
+     "figurino": "empresario",
+     "papel": "a venda do Alasca"
+    },
+    {
+     "figurino": "soldado_ww2",
+     "papel": "Stalingrado, tom sério"
+    },
+    {
+     "figurino": "cosmonauta",
+     "papel": "Gagarin"
+    }
+   ],
+   "objetos": [
+    "machado",
+    "xicara",
+    "saco_dinheiro",
+    "bandeira"
+   ],
+   "cuidado": "Terminar em 1991, de forma neutra, sem política atual; guerras, fomes e repressão com tom sério.",
+   "pinturas_a5": [
+    "Kievan Rus' wooden river town with boats",
+    "Mongol camp with yurts on the snowy steppe",
+    "Moscow Kremlin with onion domes, 1500s",
+    "St Petersburg being built on a marshy river, 1703",
+    "Alaska coast with a Russian trading post",
+    "Winter Palace square in the snow",
+    "Stalingrad ruins in winter, no people",
+    "Rocket launch pad on the steppe, 1961",
+    "Red Square today"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-02-27",
+    "fecha": "2027-02-22T12:00-03:00",
+    "opcoes": [
+     "The UK",
+     "Pirates",
+     "France"
+    ]
+   },
+   "thumbnail": "Sam de czar sem barba, irritado + RUSSIA"
+  },
+  {
+   "n": 14,
+   "data": "2027-02-27",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2027-02-27T15:00:00Z",
+   "tema": "THE UK",
+   "tipo": "remaster",
+   "nota": "roteiro v3 existe; refazer no v6",
+   "titulo": "The Entire History of the UK (Funny Animated)",
+   "titulos_alternativos": [],
+   "gancho": "(do roteiro v3)",
+   "tese": "(do roteiro v3)",
+   "refrao": "(do roteiro v3)",
+   "fatos_para_checar": [
+    "Trocar o voto final do roteiro antigo pelo voto atual.",
+    "Conferir no roteiro: Big Ben é o sino, não a torre; o Reino Unido não tem uma constituição escrita única; os vikings aparecem de novo (gag recorrente)."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "viking",
+     "papel": null
+    },
+    {
+     "figurino": "cavaleiro",
+     "papel": "1066"
+    },
+    {
+     "figurino": "rei",
+     "papel": null
+    },
+    {
+     "figurino": "rainha",
+     "papel": "Elizabeth I"
+    },
+    {
+     "figurino": "pirata",
+     "papel": "os corsários"
+    },
+    {
+     "figurino": "casaca_vermelha",
+     "papel": null
+    },
+    {
+     "figurino": "rainha_vitoria",
+     "papel": null
+    },
+    {
+     "figurino": "cavalheiro_vitoriano",
+     "papel": null
+    },
+    {
+     "figurino": "operario",
+     "papel": "Revolução Industrial"
+    },
+    {
+     "figurino": "guarda_real",
+     "papel": null
+    },
+    {
+     "figurino": "soldado_ww2",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "xicara",
+    "guarda_chuva",
+    "espada",
+    "mosquete"
+   ],
+   "cuidado": "Colonialismo e guerras com tom sério.",
+   "pinturas_a5": [
+    "As cenas do roteiro v3, refeitas no prompt A5 sem o Sam."
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-03-06",
+    "fecha": "2027-03-01T12:00-03:00",
+    "opcoes": [
+     "Pirates",
+     "France",
+     "The Wild West"
+    ]
+   },
+   "thumbnail": "Sam de guarda real com xícara + THE UK"
+  },
+  {
+   "n": 15,
+   "data": "2027-03-06",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2027-03-06T15:00:00Z",
+   "tema": "PIRATES",
+   "tipo": "novo",
+   "nota": "tema",
+   "titulo": "The Entire History of Pirates (Funny Animated)",
+   "titulos_alternativos": [
+    "Pirates Voted for Their Captains"
+   ],
+   "gancho": "Pirates voted for their captains, paid compensation for injuries, and almost never buried treasure.",
+   "tese": "piratas funcionavam como uma empresa com regras",
+   "refrao": "Then they read the rules again.",
+   "fatos_para_checar": [
+    "Era de Ouro da pirataria: c. 1650–1730.",
+    "Os capitães eram eleitos, e as regras (articles) previam indenização por ferimento.",
+    "“Andar na prancha” era raríssimo.",
+    "Tesouro enterrado quase não existiu (Capitão Kidd é a exceção famosa).",
+    "“X marca o lugar”, papagaio e perna de pau vêm muito da ficção (A Ilha do Tesouro, 1883).",
+    "Barba Negra punha pavios acesos sob o chapéu para assustar (relato de 1724).",
+    "Os corsários tinham licença do governo para atacar navios inimigos."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "pirata",
+     "papel": null
+    },
+    {
+     "figurino": "barba_negra",
+     "papel": null
+    },
+    {
+     "figurino": "rainha",
+     "papel": "Elizabeth I e os corsários"
+    },
+    {
+     "figurino": "capitao",
+     "papel": "o caçador de piratas"
+    },
+    {
+     "figurino": "casaca_vermelha",
+     "papel": "a Marinha"
+    },
+    {
+     "figurino": "nobre",
+     "papel": "o governador"
+    }
+   ],
+   "objetos": [
+    "espada",
+    "bau",
+    "mapa",
+    "telescopio",
+    "bandeira"
+   ],
+   "cuidado": "Enforcamentos e o comércio de escravizados com tom sério.",
+   "pinturas_a5": [
+    "Caribbean bay with turquoise water and a sailing ship",
+    "Nassau pirate port with wooden docks",
+    "Ship deck in a storm",
+    "Treasure island beach with palm trees",
+    "Navy frigate with full sails",
+    "Colonial governor's office with maps",
+    "Harbor gallows at dusk, no people"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": "St. Patrick's Day special",
+    "decide": "2027-03-20",
+    "fecha": "2027-03-08T12:00-03:00",
+    "opcoes": [
+     "France",
+     "The Wild West",
+     "Ancient Greece"
+    ]
+   },
+   "thumbnail": "Sam pirata com tapa-olho + PIRATES"
+  },
+  {
+   "n": 16,
+   "data": "2027-03-13",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "10:00 ET",
+   "publicar_utc": "2027-03-13T15:00:00Z",
+   "tema": "IRELAND",
+   "tipo": "especial",
+   "nota": "edição especial de St. Patrick's Day (17/03)",
+   "titulo": "The Entire History of Ireland (Funny Animated)",
+   "titulos_alternativos": [
+    "Saint Patrick Wasn't Irish"
+   ],
+   "gancho": "Saint Patrick wasn't Irish, didn't drive out any snakes, and Ireland had no snakes to begin with.",
+   "tese": "todo mundo que chegou virou irlandês",
+   "refrao": "And they became more Irish than the Irish.",
+   "fatos_para_checar": [
+    "Patrício nasceu na Britânia romana (séc. V).",
+    "A Irlanda não tem cobras nativas desde a era do gelo.",
+    "Dublin foi fundada por vikings (841): gag recorrente dos vikings.",
+    "Os normandos chegaram em 1169.",
+    "A Grande Fome (1845–1852): cena séria, sem gag.",
+    "Cerca de 30 milhões de americanos têm ascendência irlandesa.",
+    "Corned beef com repolho é tradição irlando-americana.",
+    "O rio de Chicago é tingido de verde desde 1962."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "bispo",
+     "papel": "São Patrício"
+    },
+    {
+     "figurino": "viking",
+     "papel": "Dublin"
+    },
+    {
+     "figurino": "cavaleiro",
+     "papel": "os normandos"
+    },
+    {
+     "figurino": "campones",
+     "papel": null
+    },
+    {
+     "figurino": "cavalheiro_vitoriano",
+     "papel": null
+    },
+    {
+     "figurino": "operario",
+     "papel": "os imigrantes nos EUA"
+    },
+    {
+     "figurino": "turista_americano",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "trevo",
+    "cajado",
+    "livro"
+   ],
+   "cuidado": "Respeito a São Patrício e às religiões; a Fome com tom sério.",
+   "pinturas_a5": [
+    "Green cliffs over the Atlantic",
+    "Monastery with a round stone tower",
+    "Viking Dublin with wooden houses by the river",
+    "Norman stone castle on a hill",
+    "Famine-era village in the rain, no people",
+    "Emigrant sailing ship leaving the harbor",
+    "New York street, 1900s",
+    "Chicago river dyed green today"
+   ],
+   "fim": {
+    "tipo": "sem_voto",
+    "texto": "Sem voto. Termina com: “Next Saturday: [o vencedor do último voto]”."
+   },
+   "thumbnail": "Sam de bispo com trevo + IRELAND"
+  },
+  {
+   "n": 17,
+   "data": "2027-03-20",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "11:00 EDT",
+   "publicar_utc": "2027-03-20T15:00:00Z",
+   "tema": "FRANCE",
+   "tipo": "novo",
+   "nota": null,
+   "titulo": "The Entire History of France (Funny Animated)",
+   "titulos_alternativos": [
+    "Napoleon Wasn't Short"
+   ],
+   "gancho": "The croissant has Austrian roots, Napoleon wasn't short, and the Eiffel Tower was supposed to be temporary.",
+   "tese": "a França sempre se reinventa com uma revolução",
+   "refrao": "Then France had another revolution.",
+   "fatos_para_checar": [
+    "César conquistou a Gália (58–50 a.C.).",
+    "Joana d'Arc libertou Orléans (1429) e morreu com 19 anos (tom sério no fim).",
+    "Luís XIV reinou 72 anos, o reinado mais longo da história.",
+    "Não há registro de Maria Antonieta dizendo “que comam brioches”.",
+    "Napoleão tinha altura média para a época.",
+    "A Estátua da Liberdade foi um presente da França (1886).",
+    "A Torre Eiffel tinha licença de só 20 anos.",
+    "O croissant descende do kipferl austríaco."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "gaules",
+     "papel": null
+    },
+    {
+     "figurino": "joana_darc",
+     "papel": null
+    },
+    {
+     "figurino": "rei_frances",
+     "papel": "Luís XIV"
+    },
+    {
+     "figurino": "maria_antonieta",
+     "papel": null
+    },
+    {
+     "figurino": "revolucionario",
+     "papel": "1789"
+    },
+    {
+     "figurino": "napoleao",
+     "papel": null
+    },
+    {
+     "figurino": "cavalheiro_vitoriano",
+     "papel": "Belle Époque"
+    },
+    {
+     "figurino": "soldado_ww1",
+     "papel": "tom sério"
+    },
+    {
+     "figurino": "chef",
+     "papel": null
+    },
+    {
+     "figurino": "turista",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "pao",
+    "bandeira",
+    "espada",
+    "xicara"
+   ],
+   "cuidado": "Guilhotina sem violência na tela; guerras com tom sério.",
+   "pinturas_a5": [
+    "Gaulish village with round thatched huts",
+    "Orléans city walls, 1429",
+    "Versailles Hall of Mirrors",
+    "Bastille fortress, 1789",
+    "Napoleon's camp with tents",
+    "Paris workshop building a giant copper statue, 1880s",
+    "Eiffel Tower under construction, 1888",
+    "WWI trench, no people",
+    "Paris café street today"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-03-27",
+    "fecha": "2027-03-22T12:00-03:00",
+    "opcoes": [
+     "The Wild West",
+     "Ancient Greece",
+     "Pizza"
+    ]
+   },
+   "thumbnail": "Sam de Napoleão com baguete + FRANCE"
+  },
+  {
+   "n": 18,
+   "data": "2027-03-27",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "11:00 EDT",
+   "publicar_utc": "2027-03-27T15:00:00Z",
+   "tema": "THE WILD WEST",
+   "tipo": "novo",
+   "nota": "tema",
+   "titulo": "The Entire History of the Wild West (Funny Animated)",
+   "titulos_alternativos": [
+    "The Wild West Was Less Wild Than the Movies"
+   ],
+   "gancho": "The Wild West lasted about thirty years, and its most famous gunfight took about thirty seconds.",
+   "tese": "o Velho Oeste teve mais burocracia que tiroteio",
+   "refrao": "Then they filled out the paperwork.",
+   "fatos_para_checar": [
+    "Época do Velho Oeste: mais ou menos 1865–1895.",
+    "O tiroteio do O.K. Corral (1881) durou cerca de 30 segundos.",
+    "Cidades como Tombstone e Dodge City proibiam andar armado na cidade.",
+    "Muitos cowboys eram negros e mexicanos; a cultura do cowboy vem dos vaqueros.",
+    "A ferrovia transcontinental ficou pronta em 1869.",
+    "Billy the Kid provavelmente nasceu em Nova York.",
+    "A calça jeans com rebite foi patenteada em 1873."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "cowboy",
+     "papel": null
+    },
+    {
+     "figurino": "xerife",
+     "papel": null
+    },
+    {
+     "figurino": "pioneiro",
+     "papel": null
+    },
+    {
+     "figurino": "charro",
+     "papel": "os vaqueros"
+    },
+    {
+     "figurino": "soldado_uniao",
+     "papel": "a cavalaria"
+    },
+    {
+     "figurino": "operario",
+     "papel": "a ferrovia"
+    },
+    {
+     "figurino": "empresario",
+     "papel": null
+    },
+    {
+     "figurino": "cavalheiro_vitoriano",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "laco",
+    "mosquete",
+    "saco_dinheiro",
+    "bandeira"
+   ],
+   "cuidado": "Povos indígenas com seriedade e respeito, sem fantasia e sem gag.",
+   "pinturas_a5": [
+    "Open prairie with a wagon train",
+    "Boomtown main street with wooden storefronts",
+    "Railroad golden spike site, 1869, crowd far away",
+    "Cattle drive crossing a river",
+    "Saloon interior with a piano",
+    "Dusty alley next to a corral, 1881",
+    "Sheriff's office with blank posters on the wall",
+    "Desert mesa at sunset"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-04-03",
+    "fecha": "2027-03-29T12:00-03:00",
+    "opcoes": [
+     "Ancient Greece",
+     "Pizza",
+     "Canada"
+    ]
+   },
+   "thumbnail": "Sam xerife deadpan + WILD WEST"
+  },
+  {
+   "n": 19,
+   "data": "2027-04-03",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "11:00 EDT",
+   "publicar_utc": "2027-04-03T15:00:00Z",
+   "tema": "ANCIENT GREECE",
+   "tipo": "novo",
+   "nota": null,
+   "titulo": "The Entire History of Ancient Greece (Funny Animated)",
+   "titulos_alternativos": [
+    "Greek Statues Were Never White"
+   ],
+   "gancho": "Ancient Greece gave us democracy, the Olympics and philosophy, and their white statues were actually painted.",
+   "tese": "os gregos discutiam tudo",
+   "refrao": "And then they argued about it.",
+   "fatos_para_checar": [
+    "As estátuas gregas eram pintadas.",
+    "A democracia de Atenas (séc. V a.C.) só deixava votar homens adultos cidadãos.",
+    "Primeiros Jogos Olímpicos registrados: 776 a.C.; os atletas competiam nus (mostrar de forma leve, com o atleta_grego).",
+    "Nas Termópilas (480 a.C.) não eram só 300: havia milhares de outros gregos.",
+    "A corrida da maratona é lenda.",
+    "“Idiota” vem do grego idiotes, o cidadão que ficava fora da vida pública.",
+    "Alexandre, o Grande, conquistou do Egito à Índia e morreu aos 32 anos.",
+    "Roma conquistou a Grécia em 146 a.C."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "hoplita",
+     "papel": null
+    },
+    {
+     "figurino": "espartano",
+     "papel": null
+    },
+    {
+     "figurino": "filosofo",
+     "papel": "Sócrates, Platão, Aristóteles"
+    },
+    {
+     "figurino": "atleta_grego",
+     "papel": null
+    },
+    {
+     "figurino": "campones",
+     "papel": null
+    },
+    {
+     "figurino": "alexandre",
+     "papel": "Alexandre, o Grande"
+    },
+    {
+     "figurino": "imperador_romano",
+     "papel": "146 a.C."
+    }
+   ],
+   "objetos": [
+    "lanca",
+    "escudo",
+    "pergaminho",
+    "espada"
+   ],
+   "cuidado": null,
+   "pinturas_a5": [
+    "Athens Acropolis with the Parthenon",
+    "Agora market with stalls and columns",
+    "Olympia stadium track",
+    "Thermopylae narrow mountain pass by the sea",
+    "Spartan training ground",
+    "Trireme warship at sea",
+    "Sculptor's workshop with brightly painted statues",
+    "Alexandria harbor with the lighthouse",
+    "Athens today with the Acropolis"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-04-10",
+    "fecha": "2027-04-05T12:00-03:00",
+    "opcoes": [
+     "Pizza",
+     "Canada",
+     "Korea"
+    ]
+   },
+   "thumbnail": "Sam espartano + GREECE"
+  },
+  {
+   "n": 20,
+   "data": "2027-04-10",
+   "dia": "sábado",
+   "hora_fortaleza": "12:00",
+   "hora_eua": "11:00 EDT",
+   "publicar_utc": "2027-04-10T15:00:00Z",
+   "tema": "PIZZA",
+   "tipo": "novo",
+   "nota": "tema de comida",
+   "titulo": "The Entire History of Pizza (Funny Animated)",
+   "titulos_alternativos": [
+    "Pizza Was Poor People's Food"
+   ],
+   "gancho": "Pizza was street food for the poor of Naples, became an American obsession, and pineapple pizza was invented in Canada.",
+   "tese": "a pizza foi adotada por todo mundo",
+   "refrao": "And everyone made it their own.",
+   "fatos_para_checar": [
+    "A palavra “pizza” aparece num texto em latim de 997 (Gaeta).",
+    "Pizza de rua para os pobres de Nápoles no séc. XVIII.",
+    "O tomate veio das Américas.",
+    "A história da pizza Margherita (1889) é lenda contestada.",
+    "Primeira pizzaria licenciada dos EUA: Nova York, 1905.",
+    "Soldados americanos voltaram da Itália (2ª Guerra) querendo pizza.",
+    "O pepperoni é invenção ítalo-americana.",
+    "A pizza havaiana foi criada no Canadá (1962).",
+    "Uma rede de pizzarias entregou pizza na Estação Espacial em 2001."
+   ],
+   "figurinos": [
+    {
+     "figurino": "eua",
+     "papel": null
+    },
+    {
+     "figurino": "campones",
+     "papel": "Nápoles"
+    },
+    {
+     "figurino": "rainha_margherita",
+     "papel": null
+    },
+    {
+     "figurino": "chef",
+     "papel": null
+    },
+    {
+     "figurino": "soldado_ww2",
+     "papel": null
+    },
+    {
+     "figurino": "empresario",
+     "papel": null
+    },
+    {
+     "figurino": "astronauta",
+     "papel": null
+    },
+    {
+     "figurino": "turista_americano",
+     "papel": null
+    }
+   ],
+   "objetos": [
+    "pizza",
+    "pao",
+    "saco_dinheiro"
+   ],
+   "cuidado": "Sem logotipo de rede de pizzaria.",
+   "pinturas_a5": [
+    "Naples street with a street-food stand, 1700s",
+    "Wood-fired pizza oven in a small shop",
+    "Royal palace of Naples, 1889",
+    "New York pizzeria, 1905",
+    "Italian village square, 1944, no soldiers in the foreground",
+    "1960s American diner",
+    "Small Canadian restaurant, 1962",
+    "Space station interior",
+    "Pizza shop today"
+   ],
+   "fim": {
+    "tipo": "voto",
+    "anuncia_especial": null,
+    "decide": "2027-04-17",
+    "fecha": "2027-04-12T12:00-03:00",
+    "opcoes": [
+     "Canada",
+     "Korea",
+     "Australia"
+    ]
+   },
+   "thumbnail": "Sam de chef com pizza + PIZZA"
+  }
+ ],
+ "reserva_proxima_temporada": [
+  "Canada",
+  "Korea",
+  "Australia",
+  "The Ottoman Empire",
+  "Persia",
+  "Halloween (out/2027)",
+  "Thanksgiving (nov/2027)"
+ ]
+}
