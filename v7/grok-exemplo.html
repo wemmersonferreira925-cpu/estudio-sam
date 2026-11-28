@@ -20,6 +20,7 @@ iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#0e1316
 </div>
 <script>
 // O Grok troca SÓ o que está entre /*ROTEIRO*/ e /*FIM*/ pelo roteiro do episódio (JSON v7).
+(async () => {
 const ROTEIRO = /*ROTEIRO*/{
  "versao": "7",
  "titulo": "What Happens To Your Body When You Skip Sleep",
@@ -300,7 +301,7 @@ async function link() {
   try { const cs = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate-raw')); return STUDIO + '#r=z' + b64u(new Uint8Array(await new Response(cs).arrayBuffer())); }
   catch (e) { return STUDIO + '#r=j' + b64u(bytes); }
 }
-(async () => {
+{
   const url = await link(); const a = $('abrir'); a.href = url; a.style.display = 'inline-block';
   // 1º jeito: baixa o estúdio e roda aqui mesmo, dentro da prévia do Grok
   try {
@@ -314,6 +315,7 @@ async function link() {
   try { const f = document.createElement('iframe'); f.allow = 'autoplay; clipboard-write'; f.src = url; document.body.appendChild(f);
     setTimeout(() => { $('st').textContent = 'Se o estúdio não apareceu, use o botão abaixo.'; }, 4000); }
   catch (e) { $('st').textContent = 'A prévia bloqueou o estúdio. Use o botão abaixo.'; }
+}
 })();
 </script>
 </body>
