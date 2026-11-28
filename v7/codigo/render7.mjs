@@ -49,11 +49,13 @@ if (framesArg) {
   fs.mkdirSync(out, { recursive: true });
   for (const t of framesArg) { const t0 = Date.now(); fs.writeFileSync(path.join(out, `f_${t.toFixed(2)}.jpg`), await grab(t)); console.log('quadro', t, Date.now() - t0, 'ms'); }
 } else {
-  const n = Math.round(info.duration * info.fps);
-  const ff = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(info.fps), '-i', '-', '-i', wavPath, '-map', '0:v', '-map', '1:a',
+  const n = Math.round(info.duration * info.fps), desde = opt('--desde') ? Math.round(+opt('--desde') * info.fps) : 0, ate = opt('--ate') ? Math.round(+opt('--ate') * info.fps) : n;
+  const trecho = desde > 0 || ate < n;   // só um trecho: sai sem áudio, para emendar
+  const ff = spawn('ffmpeg', trecho ? ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(info.fps), '-i', '-', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-pix_fmt', 'yuv420p', out]
+    : ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(info.fps), '-i', '-', '-i', wavPath, '-map', '0:v', '-map', '1:a',
     '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-shortest', '-movflags', '+faststart', out], { stdio: ['pipe', 'inherit', 'inherit'] });
   const t0 = Date.now();
-  for (let i = 0; i < n; i++) { const buf = await grab(i / info.fps); if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
+  for (let i = desde; i < ate; i++) { const buf = await grab(i / info.fps); if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
     if (i % 150 === 0) console.log(`quadro ${i}/${n} (${((Date.now() - t0) / 1000).toFixed(0)} s)`); }
   ff.stdin.end(); await new Promise(r => ff.on('close', r)); console.log('vídeo pronto:', out, `${((Date.now() - t0) / 1000).toFixed(0)} s`);
 }

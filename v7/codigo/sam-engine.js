@@ -1634,7 +1634,7 @@ function drawDisclaimer(ctx, L, ev, t) {
   const txt = ev.txt || 'For education only — not medical advice. Talk to a doctor about your health.';
   const fs = L.v ? 27 : 26; ctx.save(); ctx.globalAlpha = a * 0.92; ctx.font = `bold ${fs}px ${FONT_SUB}`;
   const lines = L.v ? wrapLines(ctx, txt, 760) : [txt], w = Math.max(...lines.map(q => ctx.measureText(q).width)) + 70, h = lines.length * fs * 1.3 + 20;
-  const x = L.v ? (L.W - w) / 2 : 40, y = L.v ? 1150 - h : 40;
+  const x = L.v ? (L.W - w) / 2 : 40, y = L.v ? 1352 : 40;   // no 9:16 fica logo abaixo da legenda, longe do rosto do Sam
   ctx.fillStyle = 'rgba(10,14,20,0.72)'; rr(ctx, x, y, w, h, h / 2); ctx.fill();
   ctx.fillStyle = '#ffffff'; ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
   ctx.beginPath(); ctx.arc(x + 30, y + h / 2, 12, 0, TAU); ctx.lineWidth = 3; ctx.strokeStyle = '#ffffff'; ctx.stroke(); ctx.font = `bold ${fs * 0.75}px ${FONT_SUB}`; ctx.textAlign = 'center'; ctx.fillText('i', x + 30, y + h / 2 + 1);
