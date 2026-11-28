@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sam Studio v7 · Grok</title>
+<style>
+html,body{margin:0;height:100%;background:#0e1316;color:#e9f1f4;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.box{max-width:560px;margin:40px auto;padding:22px;border:1px solid #233038;border-radius:14px;background:#151c20}
+h1{font-size:20px;margin:0 0 6px}.mut{color:#8fa2ab;font-size:13px}
+a.btn{display:inline-block;margin-top:14px;background:#FFD21F;color:#111;font-weight:800;text-decoration:none;padding:10px 16px;border-radius:10px}
+iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#0e1316}
+</style>
+</head>
+<body>
+<div class="box" id="box">
+  <h1>Sam Studio v7</h1>
+  <div class="mut" id="st">Carregando o estúdio…</div>
+  <a class="btn" id="abrir" target="_blank" rel="noopener" style="display:none">Abrir este episódio no estúdio (nova aba)</a>
+</div>
+<script>
+// O Grok troca SÓ o que está entre /*ROTEIRO*/ e /*FIM*/ pelo roteiro do episódio (JSON v7).
+const ROTEIRO = /*ROTEIRO*/{
+ "versao": "7",
+ "titulo": "What Happens To Your Body When You Skip Sleep",
+ "formato": "9x16",
+ "estilo3d": "A",
+ "sam_padrao": {
+  "x": 560,
+  "chao": 1010,
+  "escala": 1.12,
+  "pose": "maos_na_cintura",
+  "expressao": "deadpan"
+ },
+ "blocos": [
+  {
+   "fala": "You think skipping sleep saves time. Cute. Your brain is about to send you the bill.",
+   "cena": {
+    "cenario": "estudio"
+   },
+   "camera": "push",
+   "sam": [
+    {
+     "pose": "maos_na_cintura",
+     "expressao": "deadpan"
+    },
+    {
+     "palavra": "Cute",
+     "expressao": "sarcastico",
+     "pose": "sarcasmo"
+    }
+   ],
+   "tela": [
+    {
+     "tipo": "gancho",
+     "so": "9x16",
+     "txt": "SKIPPED SLEEP?\nYOUR BRAIN SENDS\nTHE BILL",
+     "destaque": [
+      "BILL"
+     ]
+    },
+    {
+     "tipo": "carimbo",
+     "palavra": "Cute",
+     "txt": "CUTE.",
+     "cor": "laranja",
+     "pos": [
+      1350,
+      380
+     ],
+     "rot": -10
+    }
+   ]
+  },
+  {
+   "fala": "Seventeen hours awake? Your reaction time drops like you had a blood alcohol level of 0.05%.",
+   "tag": "HOUR 17",
+   "camera": "medio",
+   "sam": [
+    {
+     "pose": "explicar",
+     "expressao": "cetico",
+     "olhar": 0.4
+    }
+   ],
+   "tela": [
+    {
+     "tipo": "numero",
+     "palavra": "blood",
+     "de": 0,
+     "ate": 0.05,
+     "casas": 2,
+     "sufixo": "%",
+     "txt": "BLOOD ALCOHOL LEVEL — WITHOUT ONE DRINK",
+     "pos": [
+      1300,
+      360
+     ]
+    }
+   ]
+  },
+  {
+   "fala": "Twenty-four hours? Point one zero. That's over the legal driving limit, and you didn't even have fun.",
+   "tag": "HOUR 24",
+   "sam": [
+    {
+     "pose": "bracos_cruzados",
+     "expressao": "julgando"
+    },
+    {
+     "palavra": "fun",
+     "expressao": "sarcastico",
+     "pose": "sarcasmo"
+    }
+   ],
+   "camera": "geral",
+   "tela": [
+    {
+     "tipo": "alerta",
+     "palavra": "Point",
+     "ate": "limit",
+     "titulo": "HEALTH RISK",
+     "txt": "24 hours awake ≈ 0.10% blood alcohol. U.S. limit: 0.08%",
+     "fonte": "CDC / NIOSH",
+     "pos": [
+      1380,
+      380
+     ]
+    },
+    {
+     "tipo": "carimbo",
+     "palavra": "fun",
+     "txt": "ZERO FUN",
+     "cor": "vermelho",
+     "pos": [
+      1350,
+      760
+     ],
+     "rot": 8
+    }
+   ]
+  },
+  {
+   "fala": "Meanwhile, down in your bloodstream, the stress hormones climb, and your immune system starts slacking off.",
+   "cena": {
+    "cenario": "arteria",
+    "sam": {
+     "chao": 900
+    }
+   },
+   "transicao": "whip",
+   "sam": [
+    {
+     "pose": "apontar",
+     "expressao": "deadpan",
+     "prancha": "hemacia",
+     "olhar": 0.5
+    },
+    {
+     "palavra": "immune",
+     "pose": "dar_de_ombros",
+     "expressao": "revirando"
+    }
+   ],
+   "tela": [
+    {
+     "tipo": "rotulo",
+     "palavra": "bloodstream",
+     "ate": "climb",
+     "alvo": "celula1",
+     "txt": "RED BLOOD CELLS: STILL WORKING"
+    },
+    {
+     "tipo": "rotulo",
+     "palavra": "immune",
+     "alvo": "globulo_branco",
+     "txt": "IMMUNE CELL: ON BREAK",
+     "dur": 2.6
+    }
+   ]
+  },
+  {
+   "fala": "Then come microsleeps. Your brain blacks out for a few seconds, and you don't even notice.",
+   "sam": [
+    {
+     "expressao": "preocupado",
+     "pose": "idle"
+    },
+    {
+     "palavra": "blacks",
+     "expressao": "olhos_fechados"
+    },
+    {
+     "palavra": "notice",
+     "expressao": "surpreso",
+     "pose": "susto"
+    }
+   ],
+   "acoes": [
+    {
+     "tipo": "susto",
+     "palavra": "notice"
+    }
+   ],
+   "camera": "perto",
+   "tela": [
+    {
+     "tipo": "alerta",
+     "palavra": "microsleeps",
+     "titulo": "MICROSLEEPS",
+     "txt": "Seconds-long blackouts while you're awake. Deadly behind the wheel.",
+     "pos": [
+      1360,
+      330
+     ]
+    }
+   ]
+  },
+  {
+   "fala": "So here's the fix. Adults need seven or more hours. Wake up at the same time every day. And if you're sleepy, don't drive.",
+   "cena": {
+    "cenario": "estudio"
+   },
+   "transicao": "fade",
+   "tag": "",
+   "sam": [
+    {
+     "pose": "explicar",
+     "expressao": "serio",
+     "olhar": 0.3
+    }
+   ],
+   "camera": "geral",
+   "tela": [
+    {
+     "tipo": "lista",
+     "palavra": "fix",
+     "titulo": "DO THIS",
+     "estilo": "cuidado",
+     "pos": [
+      1380,
+      470
+     ],
+     "itens": [
+      {
+       "txt": "7+ hours of sleep",
+       "palavra": "seven"
+      },
+      {
+       "txt": "Same wake-up time, every day",
+       "palavra": "Wake"
+      },
+      {
+       "txt": "Sleepy? Don't drive.",
+       "palavra": "drive"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "fala": "Your brain will thank you. Or at least stop sending invoices.",
+   "sam": [
+    {
+     "pose": "sarcasmo",
+     "expressao": "sorriso"
+    },
+    {
+     "palavra": "invoices",
+     "expressao": "sarcastico"
+    }
+   ],
+   "camera": "rosto",
+   "tela": [
+    {
+     "tipo": "carimbo",
+     "palavra": "invoices",
+     "txt": "PAID",
+     "cor": "verde",
+     "pos": [
+      1300,
+      420
+     ],
+     "rot": -12
+    }
+   ]
+  }
+ ],
+ "duracao_alvo": [
+  30,
+  90
+ ]
+}/*FIM*/;
+const STUDIO = 'https://wemmersonferreira925-cpu.github.io/estudio-sam/v7/';
+const $ = id => document.getElementById(id);
+const b64u = u8 => { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+async function link() {
+  if (!ROTEIRO) return STUDIO;
+  const bytes = new TextEncoder().encode(JSON.stringify(ROTEIRO));
+  try { const cs = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate-raw')); return STUDIO + '#r=z' + b64u(new Uint8Array(await new Response(cs).arrayBuffer())); }
+  catch (e) { return STUDIO + '#r=j' + b64u(bytes); }
+}
+(async () => {
+  const url = await link(); const a = $('abrir'); a.href = url; a.style.display = 'inline-block';
+  // 1º jeito: baixa o estúdio e roda aqui mesmo, dentro da prévia do Grok
+  try {
+    const r = await fetch(STUDIO + 'index.html', { cache: 'no-cache' }); if (!r.ok) throw new Error('HTTP ' + r.status);
+    let html = await r.text();
+    const injeta = '<script>window.__ROTEIRO__=' + JSON.stringify(ROTEIRO).replace(/</g, '\\u003c') + ';<\/script>';
+    html = html.replace('<head>', '<head>' + injeta);
+    document.open(); document.write(html); document.close(); return;
+  } catch (e) { $('st').textContent = 'Abrindo o estúdio numa moldura…'; }
+  // 2º jeito: moldura com o estúdio do GitHub
+  try { const f = document.createElement('iframe'); f.allow = 'autoplay; clipboard-write'; f.src = url; document.body.appendChild(f);
+    setTimeout(() => { $('st').textContent = 'Se o estúdio não apareceu, use o botão abaixo.'; }, 4000); }
+  catch (e) { $('st').textContent = 'A prévia bloqueou o estúdio. Use o botão abaixo.'; }
+})();
+</script>
+</body>
+</html>
