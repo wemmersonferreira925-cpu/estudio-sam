@@ -1,0 +1,20 @@
+# Monta o site do Sam Studio v7: index.html (estúdio completo, um arquivo só) + grok.html (carregador para o Grok)
+import base64, json, os, sys
+R = '/home/claude/v7'; OUT = sys.argv[1] if len(sys.argv) > 1 else R + '/out/site'
+os.makedirs(OUT, exist_ok=True)
+b64 = lambda p: base64.b64encode(open(p, 'rb').read()).decode()
+safe = lambda s: s.replace('</script>', '<\\/script>')
+tpl = open(R + '/studio/studio-v7-template.html').read()
+demo = {'roteiro': json.load(open(R + '/demo/roteiro.json')), 'voz': 'data:audio/mp4;base64,' + b64(R + '/demo/narracao.m4a')}
+html = (tpl.replace('__FONT_ANTON__', b64('/usr/share/fonts/truetype/google-fonts/ofl/anton/Anton-Regular.ttf'))
+           .replace('__FONT_ARCHIVO__', b64('/usr/share/fonts/truetype/google-fonts/ofl/archivoblack/ArchivoBlack-Regular.ttf'))
+           .replace('__BUNDLE__', safe(open(R + '/studio/sam3d.bundle.js').read()))
+           .replace('__ENGINE__', safe(open(R + '/studio/sam-engine.js').read()))
+           .replace('__AUDIO__', safe(open(R + '/studio/audio-v7.js').read()))
+           .replace('__DEMO__', json.dumps(demo, ensure_ascii=False)))
+open(OUT + '/index.html', 'w').write(html)
+grok = open(R + '/studio/grok-template.html').read()
+open(OUT + '/grok.html', 'w').write(grok)
+ex = json.load(open(R + '/demo/roteiro.json')); ex.pop('voz', None)
+open(OUT + '/grok-exemplo.html', 'w').write(grok.replace('/*ROTEIRO*/null/*FIM*/', '/*ROTEIRO*/' + json.dumps(ex, ensure_ascii=False, indent=1) + '/*FIM*/'))
+print('index.html', round(len(html) / 1e6, 2), 'MB · grok.html', len(grok), 'bytes')

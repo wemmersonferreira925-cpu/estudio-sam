@@ -1,0 +1,272 @@
+{
+ "versao": "7",
+ "titulo": "What Happens To Your Body When You Skip Sleep",
+ "formato": "9x16",
+ "estilo3d": "A",
+ "voz": "narracao.wav",
+ "sam_padrao": {
+  "x": 560,
+  "chao": 1010,
+  "escala": 1.12,
+  "pose": "maos_na_cintura",
+  "expressao": "deadpan"
+ },
+ "blocos": [
+  {
+   "fala": "You think skipping sleep saves time. Cute. Your brain is about to send you the bill.",
+   "cena": {
+    "cenario": "estudio"
+   },
+   "camera": "push",
+   "sam": [
+    {
+     "pose": "maos_na_cintura",
+     "expressao": "deadpan"
+    },
+    {
+     "palavra": "Cute",
+     "expressao": "sarcastico",
+     "pose": "sarcasmo"
+    }
+   ],
+   "tela": [
+    {
+     "tipo": "gancho",
+     "so": "9x16",
+     "txt": "SKIPPED SLEEP?\nYOUR BRAIN SENDS\nTHE BILL",
+     "destaque": [
+      "BILL"
+     ]
+    },
+    {
+     "tipo": "carimbo",
+     "palavra": "Cute",
+     "txt": "CUTE.",
+     "cor": "laranja",
+     "pos": [
+      1350,
+      380
+     ],
+     "rot": -10
+    }
+   ]
+  },
+  {
+   "fala": "Seventeen hours awake? Your reaction time drops like you had a blood alcohol level of 0.05%.",
+   "tag": "HOUR 17",
+   "camera": "medio",
+   "sam": [
+    {
+     "pose": "explicar",
+     "expressao": "cetico",
+     "olhar": 0.4
+    }
+   ],
+   "tela": [
+    {
+     "tipo": "numero",
+     "palavra": "blood",
+     "de": 0,
+     "ate": 0.05,
+     "casas": 2,
+     "sufixo": "%",
+     "txt": "BLOOD ALCOHOL LEVEL — WITHOUT ONE DRINK",
+     "pos": [
+      1300,
+      360
+     ]
+    }
+   ]
+  },
+  {
+   "fala": "Twenty-four hours? Point one zero. That's over the legal driving limit, and you didn't even have fun.",
+   "tag": "HOUR 24",
+   "sam": [
+    {
+     "pose": "bracos_cruzados",
+     "expressao": "julgando"
+    },
+    {
+     "palavra": "fun",
+     "expressao": "sarcastico",
+     "pose": "sarcasmo"
+    }
+   ],
+   "camera": "geral",
+   "tela": [
+    {
+     "tipo": "alerta",
+     "palavra": "Point",
+     "ate": "limit",
+     "titulo": "HEALTH RISK",
+     "txt": "24 hours awake ≈ 0.10% blood alcohol. U.S. limit: 0.08%",
+     "fonte": "CDC / NIOSH",
+     "pos": [
+      1380,
+      380
+     ]
+    },
+    {
+     "tipo": "carimbo",
+     "palavra": "fun",
+     "txt": "ZERO FUN",
+     "cor": "vermelho",
+     "pos": [
+      1350,
+      760
+     ],
+     "rot": 8
+    }
+   ]
+  },
+  {
+   "fala": "Meanwhile, down in your bloodstream, the stress hormones climb, and your immune system starts slacking off.",
+   "cena": {
+    "cenario": "arteria",
+    "sam": {
+     "chao": 900
+    }
+   },
+   "transicao": "whip",
+   "sam": [
+    {
+     "pose": "apontar",
+     "expressao": "deadpan",
+     "prancha": "hemacia",
+     "olhar": 0.5
+    },
+    {
+     "palavra": "immune",
+     "pose": "dar_de_ombros",
+     "expressao": "revirando"
+    }
+   ],
+   "tela": [
+    {
+     "tipo": "rotulo",
+     "palavra": "bloodstream",
+     "ate": "climb",
+     "alvo": "celula1",
+     "txt": "RED BLOOD CELLS: STILL WORKING"
+    },
+    {
+     "tipo": "rotulo",
+     "palavra": "immune",
+     "alvo": "globulo_branco",
+     "txt": "IMMUNE CELL: ON BREAK",
+     "dur": 2.6
+    }
+   ]
+  },
+  {
+   "fala": "Then come microsleeps. Your brain blacks out for a few seconds, and you don't even notice.",
+   "sam": [
+    {
+     "expressao": "preocupado",
+     "pose": "idle"
+    },
+    {
+     "palavra": "blacks",
+     "expressao": "olhos_fechados"
+    },
+    {
+     "palavra": "notice",
+     "expressao": "surpreso",
+     "pose": "susto"
+    }
+   ],
+   "acoes": [
+    {
+     "tipo": "susto",
+     "palavra": "notice"
+    }
+   ],
+   "camera": "perto",
+   "tela": [
+    {
+     "tipo": "alerta",
+     "palavra": "microsleeps",
+     "titulo": "MICROSLEEPS",
+     "txt": "Seconds-long blackouts while you're awake. Deadly behind the wheel.",
+     "pos": [
+      1360,
+      330
+     ]
+    }
+   ]
+  },
+  {
+   "fala": "So here's the fix. Adults need seven or more hours. Wake up at the same time every day. And if you're sleepy, don't drive.",
+   "cena": {
+    "cenario": "estudio"
+   },
+   "transicao": "fade",
+   "tag": "",
+   "sam": [
+    {
+     "pose": "explicar",
+     "expressao": "serio",
+     "olhar": 0.3
+    }
+   ],
+   "camera": "geral",
+   "tela": [
+    {
+     "tipo": "lista",
+     "palavra": "fix",
+     "titulo": "DO THIS",
+     "estilo": "cuidado",
+     "pos": [
+      1380,
+      470
+     ],
+     "itens": [
+      {
+       "txt": "7+ hours of sleep",
+       "palavra": "seven"
+      },
+      {
+       "txt": "Same wake-up time, every day",
+       "palavra": "Wake"
+      },
+      {
+       "txt": "Sleepy? Don't drive.",
+       "palavra": "drive"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "fala": "Your brain will thank you. Or at least stop sending invoices.",
+   "sam": [
+    {
+     "pose": "sarcasmo",
+     "expressao": "sorriso"
+    },
+    {
+     "palavra": "invoices",
+     "expressao": "sarcastico"
+    }
+   ],
+   "camera": "rosto",
+   "tela": [
+    {
+     "tipo": "carimbo",
+     "palavra": "invoices",
+     "txt": "PAID",
+     "cor": "verde",
+     "pos": [
+      1300,
+      420
+     ],
+     "rot": -12
+    }
+   ]
+  }
+ ],
+ "duracao_alvo": [
+  30,
+  90
+ ]
+}

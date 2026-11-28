@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sam Studio v7 — Sam 3D · corpo humano</title>
+<style>
+@font-face{font-family:"Anton";src:url(data:font/ttf;base64,__FONT_ANTON__) format("truetype");}
+@font-face{font-family:"Archivo Black";src:url(data:font/ttf;base64,__FONT_ARCHIVO__) format("truetype");}
+:root{--bg:#0e1316;--panel:#151c20;--line:#233038;--txt:#e9f1f4;--mut:#8fa2ab;--yel:#FFD21F;--red:#ff6b6b;--grn:#46c26b;--cy:#3fd3f2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+header h1{font:20px "Archivo Black",sans-serif;margin:0;letter-spacing:.4px}
+.tag{background:var(--yel);color:#111;font-weight:800;border-radius:6px;padding:2px 8px;font-size:12px}
+header .sub{color:var(--mut);font-size:13px}
+main{display:grid;grid-template-columns:380px 1fr;min-height:calc(100vh - 56px)}
+@media (max-width:900px){main{grid-template-columns:1fr}aside{max-height:none!important;border-right:0!important;border-bottom:1px solid var(--line)}}
+aside{border-right:1px solid var(--line);padding:14px;overflow:auto;max-height:calc(100vh - 56px)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px}
+.card h2{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:0 0 8px;display:flex;gap:6px;align-items:center}
+.card h2 b{background:#22313a;color:var(--txt);border-radius:999px;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:11px}
+button{background:#22313a;color:var(--txt);border:1px solid #33444e;border-radius:8px;padding:8px 12px;font-weight:650;cursor:pointer;font-size:13px}
+button:hover{border-color:#577080}
+button.primary{background:var(--yel);color:#111;border-color:var(--yel)}
+button:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.status{font-size:12px;color:var(--mut);margin-top:6px}
+.ok{color:var(--grn)}.bad{color:var(--red)}
+label.file{display:block;border:1px dashed #3d515c;border-radius:9px;padding:10px;text-align:center;cursor:pointer;color:var(--mut);font-size:13px}
+label.file:hover{border-color:var(--yel);color:var(--txt)}
+label.file input{display:none}
+textarea{width:100%;min-height:110px;background:#0c1114;color:#d9e6ec;border:1px solid #2c3b44;border-radius:9px;padding:8px;font:12px ui-monospace,Menlo,monospace;resize:vertical}
+.seg{display:inline-flex;border:1px solid #33444e;border-radius:8px;overflow:hidden}
+.seg button{border:0;border-radius:0;background:#1b262d}
+.seg button.on{background:var(--yel);color:#111}
+.stage{padding:18px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.viewport{width:100%;max-width:1100px;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.45)}
+.viewport.v{aspect-ratio:9/16;max-width:min(420px,100%)}
+.viewport canvas{width:100%;height:100%;display:block}
+.transport{width:100%;max-width:1100px;display:flex;gap:10px;align-items:center}
+.transport input[type=range]{flex:1;accent-color:var(--yel)}
+.time{font:600 13px ui-monospace,Menlo,monospace;color:var(--mut);min-width:110px;text-align:right}
+ul.list{margin:6px 0 0;padding-left:18px;font-size:12px}
+ul.list li{margin:2px 0}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.chip{background:#1b262d;border:1px solid #2c3b44;border-radius:999px;padding:1px 8px;font:12px ui-monospace,Menlo,monospace;color:#d7e4ea}
+.small{font-size:12px;color:var(--mut)}
+.small code{font:11px ui-monospace,Menlo,monospace;background:#1b262d;border:1px solid #2c3b44;border-radius:5px;padding:1px 4px;color:#d7e4ea;word-break:break-word}
+progress{width:100%;height:10px;accent-color:var(--yel)}
+.hint{background:#13261c;border:1px solid #24503a;color:#cfe9d8;border-radius:9px;padding:8px 10px;font-size:12px}
+.warnbox{background:#2a1d1d;border:1px solid #533;color:#ffd0d0;border-radius:9px;padding:8px 10px;font-size:12px}
+input[type=range].vol{width:120px;accent-color:var(--yel)}
+</style>
+</head>
+<body>
+<header>
+  <h1>SAM STUDIO</h1><span class="tag">v7 · SAM 3D</span>
+  <span class="sub">Sam sarcástico em 3D · corpo humano e saúde · roteiro do Grok vira vídeo 9:16 pronto</span>
+</header>
+<main>
+<aside>
+  <div class="card">
+    <h2><b>1</b> Roteiro (o JSON que o Grok escreveu)</h2>
+    <textarea id="txtRot" placeholder='Cole aqui o roteiro: { "versao": "7", "titulo": "...", "blocos": [ { "fala": "...", ... } ] }'></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="primary" id="btnUsar">Usar este roteiro</button>
+      <label class="file" style="flex:1;padding:8px">Abrir .json<input type="file" id="inJson" accept=".json,application/json"></label>
+      <button id="btnDemo">Demo: sono</button>
+    </div>
+    <div class="status" id="stJson">Nenhum roteiro carregado.</div>
+  </div>
+  <div class="card">
+    <h2><b>2</b> Narração (MP3/WAV de qualquer gerador de voz)</h2>
+    <label class="file">Selecionar a narração<input type="file" id="inVoz" accept="audio/*,.wav,.mp3,.m4a"></label>
+    <div class="status" id="stVoz">Sem narração: os tempos são estimados (≈2,6 palavras/s) e a boca mexe por sílaba. Quando a voz chegar, o estúdio alinha tudo sozinho.</div>
+  </div>
+  <div class="card">
+    <h2><b>3</b> Clipes e imagens (Grok Imagine, Flow…)</h2>
+    <label class="file">Selecionar vídeos/imagens<input type="file" id="inMidia" accept="video/*,image/*" multiple></label>
+    <ul class="list" id="lstMidia"></ul>
+    <div class="small" style="margin-top:6px">Música (opcional, sem direitos autorais)</div>
+    <div class="row"><label class="file" style="flex:1;padding:8px">Selecionar música<input type="file" id="inMus" accept="audio/*"></label><input type="range" class="vol" id="volMus" min="0" max="0.35" step="0.01" value="0.12"></div>
+    <div class="status" id="stMus">Sem música.</div>
+  </div>
+  <div class="card">
+    <h2><b>4</b> Checagem (meta: zero ⚠)</h2>
+    <div id="checks" class="small">—</div>
+  </div>
+  <div class="card">
+    <h2><b>5</b> Formato e exportação</h2>
+    <div class="row">
+      <div class="seg"><button id="f916" class="on">9:16 TikTok/Reels/Shorts</button><button id="f169">16:9</button></div>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <span class="small">Sam</span><div class="seg"><button id="stA" class="on">A · desenho 3D</button><button id="stB">B · 3D macio</button></div>
+    </div>
+    <label class="small" id="lblZonas" style="display:block;margin-top:8px"><input type="checkbox" id="chkZonas" checked> Mostrar onde o TikTok/Reels cobre a tela (só na prévia)</label>
+    <div class="row" style="margin-top:10px">
+      <button class="primary" id="btnExport" disabled>Exportar MP4</button>
+      <button id="btnStill" disabled>Quadro (PNG)</button>
+      <button id="btnWav" disabled>Áudio (WAV)</button>
+      <button id="btnJson" disabled>JSON com tempos</button>
+    </div>
+    <progress id="prog" max="1" value="0" style="margin-top:10px;display:none"></progress>
+    <div class="status" id="stExport">A exportação desenha quadro a quadro: não pula nada, mesmo em PC fraco. Pode demorar mais que o vídeo.</div>
+    <div class="status" id="stFora" style="display:none"></div>
+  </div>
+  <div class="card">
+    <h2>Catálogo</h2>
+    <div class="small">Cenários 3D</div><div class="chips" id="cSets"></div>
+    <div class="small" style="margin-top:6px">Na tela (tipo)</div><div class="chips" id="cTela"></div>
+    <div class="small" style="margin-top:6px">Câmera</div><div class="chips"><span class="chip">push</span><span class="chip">pull</span><span class="chip">geral</span><span class="chip">medio</span><span class="chip">perto</span><span class="chip">rosto</span><span class="chip">punch</span><span class="chip">tremer</span></div>
+    <div class="small" style="margin-top:6px">Poses</div><div class="chips" id="cPoses"></div>
+    <div class="small" style="margin-top:6px">Expressões</div><div class="chips" id="cExpr"></div>
+    <div class="small" style="margin-top:6px">Ações</div><div class="chips"><span class="chip">susto</span><span class="chip">piscar</span><span class="chip">espiar</span><span class="chip">andar</span><span class="chip">sair</span></div>
+    <div class="small" style="margin-top:6px">Sons</div><div class="chips" id="cSfx"></div>
+    <div class="row" style="margin-top:8px"><button id="btnOuvir">Ouvir os sons</button></div>
+  </div>
+</aside>
+<section class="stage">
+  <div class="viewport v" id="vp"><canvas id="cv"></canvas></div>
+  <div class="transport">
+    <button id="btnPlay" disabled>▶ Play</button>
+    <input type="range" id="scrub" min="0" max="1" step="0.001" value="0" disabled>
+    <span class="time" id="time">0.00 / 0.00 s</span>
+  </div>
+  <div class="hint" style="max-width:1100px">Como funciona: o Grok escreve o <b>roteiro</b> (falas + o que aparece na tela, preso a palavras da fala). O estúdio calcula os tempos, anima o Sam em 3D, monta cartões de risco e de cuidado, rótulos com seta, contador, lista, carimbos, legenda karaokê e efeitos sonoros. Com a narração carregada, tudo se alinha à voz.</div>
+</section>
+</main>
+<script>__BUNDLE__</script>
+<script>__ENGINE__</script>
+<script>__AUDIO__</script>
+<script>
+const DEMO = __DEMO__;
+const PAGES_URL = 'https://wemmersonferreira925-cpu.github.io/estudio-sam/v7/';
+const $ = id => document.getElementById(id);
+const cv = $('cv');
+const S = { rot: null, ep: null, warns: [], words: null, voz: null, vozNome: '', mus: null, mix: null, images: {}, videos: {}, fmt: '9x16', estilo: 'A', engine: null, playing: false, t: 0 };
+let actx = null; const AC = () => (actx ||= new (window.AudioContext || window.webkitAudioContext)());
+const fill = (id, arr) => { $(id).innerHTML = arr.map(x => `<span class="chip">${x}</span>`).join(''); };
+fill('cSets', SamEngine.CENARIOS_3D); fill('cTela', SamEngine.EVENT_TYPES); fill('cPoses', SamEngine.POSE_NAMES); fill('cExpr', SamEngine.EXPR_NAMES); fill('cSfx', SamEngine.SFX_NAMES);
+
+function loadImage(src) { return new Promise((res, rej) => { const im = new Image(); im.crossOrigin = 'anonymous'; im.onload = () => res(im); im.onerror = rej; im.src = src; }); }
+function loadVideo(src) { return new Promise((res, rej) => { const v = document.createElement('video'); v.muted = true; v.playsInline = true; v.preload = 'auto'; v.crossOrigin = 'anonymous';
+  v.onloadeddata = () => res(v); v.onerror = () => rej(new Error('vídeo ilegível')); v.src = src; }); }
+function midiaNecessaria() {
+  if (!S.ep) return [];
+  const s = new Set(); for (const c of S.ep.cenas) { if (c.fundo) s.add(c.fundo); if (c.video) s.add(c.video); if (c.cena3d && c.cena3d.tela) s.add(c.cena3d.tela); } return [...s];
+}
+// roteiro → episódio com tempos (alinhado à voz se houver)
+function compilar() {
+  if (!S.rot) return;
+  const rot = JSON.parse(JSON.stringify(S.rot)); rot.formato = S.fmt; rot.estilo3d = S.estilo;
+  const est = SamEngine.estimarPalavras(rot.blocos || [], rot.ritmo || 1);
+  S.words = S.voz ? SamEngine.alinharPalavras(est, SamEngine.envelope(S.voz.getChannelData(0), S.voz.sampleRate, 100), 100) : est;
+  const r = SamEngine.compilarRoteiro(rot, S.words); S.ep = r.ep; S.warns = r.warns;
+  if (S.ep && S.voz) S.ep.duracao = Math.max(S.ep.duracao, +(S.voz.duration + 0.6).toFixed(2));
+}
+async function rebuild(remix = true) {
+  if (!S.rot) return; pause(); compilar(); if (!S.ep) { renderChecks(); return; }
+  const boca = S.voz ? SamAudio.boca(S.voz, S.ep.fps, S.ep.duracao) : SamEngine.bocaDePalavras(S.words, S.ep.fps, S.ep.duracao);
+  S.engine = SamEngine.create(cv, S.ep, { images: S.images, videos: S.videos, boca, estilo3d: S.estilo });
+  $('vp').classList.toggle('v', S.fmt === '9x16'); $('lblZonas').style.display = S.fmt === '9x16' ? 'block' : 'none';
+  $('scrub').max = S.engine.duration; ['btnPlay', 'scrub', 'btnExport', 'btnStill', 'btnJson', 'btnWav'].forEach(id => $(id).disabled = false);
+  if (remix) S.mix = await SamAudio.mix({ voz: S.voz, musica: S.mus, musicaVol: +$('volMus').value, sfx: S.ep.sfx, dur: S.ep.duracao });
+  renderChecks(); S.t = Math.min(S.t, S.engine.duration - 0.01); draw();
+}
+function renderChecks() {
+  const w = (S.warns || []).concat(S.engine ? S.engine.warnings : []);
+  for (const n of midiaNecessaria()) if (!S.images[n] && !S.videos[n]) w.push(`⚠ falta o arquivo "${n}" (carregue no passo 3)`);
+  if (S.voz && S.ep && S.voz.duration > S.ep.duracao + 1) w.push(`⚠ a narração (${S.voz.duration.toFixed(1)} s) é mais longa que o roteiro: confira se é o áudio certo`);
+  if (S.engine && !S.engine.sam3d) w.push('⚠ este navegador não abriu o 3D (WebGL): o Sam aparece em 2D');
+  $('checks').innerHTML = w.length ? `<div class="warnbox"><b>${w.length} aviso(s)</b><ul class="list">${w.map(x => `<li>${x}</li>`).join('')}</ul></div>`
+    : `<span class="ok">✓ zero avisos</span> — palavras, poses, expressões, cenários, cartões, legendas e ritmo conferidos.`;
+  $('lstMidia').innerHTML = midiaNecessaria().map(n => `<li class="${S.images[n] || S.videos[n] ? 'ok' : 'bad'}">${S.images[n] || S.videos[n] ? '✓' : '✗'} ${n}</li>`).join('') || '<li class="small">O roteiro não pede arquivos.</li>';
+}
+function drawZonas() {
+  if (S.exporting || S.fmt !== '9x16' || !$('chkZonas').checked) return;
+  const g = cv.getContext('2d'); g.save(); g.fillStyle = 'rgba(255,40,40,0.20)';
+  g.fillRect(0, 0, 1080, 220); g.fillRect(0, 1440, 1080, 480); g.fillRect(940, 700, 140, 740);
+  g.strokeStyle = 'rgba(255,210,31,0.9)'; g.setLineDash([14, 10]); g.lineWidth = 3; g.strokeRect(72, 262, 876, 1138);
+  g.fillStyle = 'rgba(255,255,255,0.85)'; g.font = 'bold 26px sans-serif'; g.fillText('abas do app', 30, 140); g.fillText('legenda do post, @ e som', 30, 1600); g.fillText('botões', 950, 1080);
+  g.restore();
+}
+// vídeos de fundo/telão andam junto com o tempo do episódio
+function videoLocal(t) {
+  const out = []; if (!S.ep) return out; let i = 0; S.ep.cenas.forEach((c, k) => { if (c.inicio <= t) i = k; });
+  const c = S.ep.cenas[i]; for (const nm of [c.video, c.cena3d && c.cena3d.tela]) if (nm && S.videos[nm]) { const v = S.videos[nm], d = v.duration || 1; out.push([v, ((t - c.inicio + (c.video_inicio || 0)) % d + d) % d]); }
+  return out;
+}
+function syncVideos(t, playing) { for (const v of Object.values(S.videos)) if (!videoLocal(t).some(([x]) => x === v) && !v.paused) v.pause();
+  for (const [v, lt] of videoLocal(t)) { if (Math.abs(v.currentTime - lt) > 0.25) v.currentTime = lt; if (playing && v.paused) v.play().catch(() => {}); if (!playing && !v.paused) v.pause(); } }
+async function seekVideos(t) { for (const [v, lt] of videoLocal(t)) { if (Math.abs(v.currentTime - lt) < 1e-3) continue; await new Promise(r => { const ok = () => { v.removeEventListener('seeked', ok); r(); }; v.addEventListener('seeked', ok); v.currentTime = lt; setTimeout(ok, 1500); }); } }
+function draw() { if (!S.engine) return; S.engine.renderAt(Math.min(S.t, S.engine.duration - 1e-3)); drawZonas(); $('scrub').value = S.t; $('time').textContent = `${S.t.toFixed(2)} / ${S.engine.duration.toFixed(2)} s`; }
+
+let src = null, t0 = 0, raf = 0;
+function play() {
+  if (!S.engine) return; const a = AC(); a.resume();
+  if (S.mix) { src = a.createBufferSource(); src.buffer = S.mix; src.connect(a.destination); src.start(0, S.t); t0 = a.currentTime - S.t; } else t0 = performance.now() / 1000 - S.t;
+  S.playing = true; $('btnPlay').textContent = '❚❚ Pausar'; loop();
+}
+function loop() {
+  if (!S.playing) return;
+  S.t = S.mix ? AC().currentTime - t0 : performance.now() / 1000 - t0;
+  if (S.t >= S.engine.duration) { pause(); S.t = 0; }
+  syncVideos(S.t, true); draw(); raf = requestAnimationFrame(loop);
+}
+function pause() { S.playing = false; cancelAnimationFrame(raf); if (src) { try { src.stop(); } catch (e) {} src = null; } $('btnPlay').textContent = '▶ Play'; syncVideos(S.t, false); }
+$('btnPlay').onclick = () => (S.playing ? pause() : play());
+$('scrub').oninput = e => { const was = S.playing; pause(); S.t = +e.target.value; syncVideos(S.t, false); draw(); if (was) play(); };
+
+async function saveFile(name, blob) {
+  try { if (window.claude && claude.use) { const d = await claude.use('downloads'); if (d) { await d.save({ filename: name, data: blob }); return 'saved'; } } }
+  catch (e) { if (e && e.code === 'declined') return 'declined'; if (e && e.code && e.code !== 'unavailable') return 'erro: ' + e.code; }
+  try { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
+  catch (e) { return 'bloqueado'; }
+  if (window.self !== window.top && S.rot) { const f = $('stFora'), url = PAGES_URL + '#r=' + await empacotar(S.rot); f.style.display = 'block';
+    f.innerHTML = 'Se o arquivo não baixou (a prévia do Grok pode bloquear downloads), <a id="lnkFora" target="_blank" rel="noopener" style="color:var(--yel)">abra este roteiro no estúdio em uma aba</a> e exporte de lá.';
+    $('lnkFora').href = url; }
+  return 'saved';
+}
+async function empacotar(obj) { const bytes = new TextEncoder().encode(JSON.stringify(obj));
+  if (window.CompressionStream) { const cs = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate-raw')); const buf = new Uint8Array(await new Response(cs).arrayBuffer()); return 'z' + b64u(buf); }
+  return 'j' + b64u(bytes); }
+async function desempacotar(s) { const kind = s[0], bytes = ub64u(s.slice(1));
+  if (kind === 'z') { const ds = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw')); return JSON.parse(await new Response(ds).text()); }
+  return JSON.parse(new TextDecoder().decode(bytes)); }
+const b64u = u8 => { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+const ub64u = s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+
+function nomeArquivo(ext) { return `${(S.ep.titulo || 'sam').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40)}-${S.fmt}.${ext}`; }
+$('f916').onclick = () => { S.fmt = '9x16'; $('f916').classList.add('on'); $('f169').classList.remove('on'); rebuild(false); };
+$('f169').onclick = () => { S.fmt = '16x9'; $('f169').classList.add('on'); $('f916').classList.remove('on'); rebuild(false); };
+$('stA').onclick = () => { S.estilo = 'A'; $('stA').classList.add('on'); $('stB').classList.remove('on'); rebuild(false); };
+$('stB').onclick = () => { S.estilo = 'B'; $('stB').classList.add('on'); $('stA').classList.remove('on'); rebuild(false); };
+$('chkZonas').onchange = () => draw();
+
+async function usarRoteiro(obj, origem) {
+  if (!obj || !Array.isArray(obj.blocos)) { $('stJson').innerHTML = '<span class="bad">Isto não é um roteiro v7: falta a lista "blocos".</span>'; return; }
+  S.rot = obj; S.t = 0; $('txtRot').value = JSON.stringify(obj, null, 1);
+  if (obj.formato === '16x9') { S.fmt = '16x9'; $('f169').classList.add('on'); $('f916').classList.remove('on'); }
+  else { S.fmt = '9x16'; $('f916').classList.add('on'); $('f169').classList.remove('on'); }
+  $('stJson').innerHTML = `<span class="ok">✓ ${obj.titulo || 'roteiro'}</span> · ${obj.blocos.length} blocos · ${origem}`;
+  await rebuild();
+}
+$('btnUsar').onclick = () => { try { usarRoteiro(JSON.parse($('txtRot').value), 'colado'); } catch (e) { $('stJson').innerHTML = `<span class="bad">JSON inválido: ${e.message}</span>`; } };
+$('inJson').onchange = async e => { const f = e.target.files[0]; if (!f) return; try { usarRoteiro(JSON.parse(await f.text()), f.name); } catch (err) { $('stJson').innerHTML = `<span class="bad">JSON inválido: ${err.message}</span>`; } };
+$('btnDemo').onclick = async () => {
+  $('stJson').textContent = 'Carregando a demo…';
+  try { const bin = Uint8Array.from(atob(DEMO.voz.split(',')[1]), c => c.charCodeAt(0)); S.voz = await AC().decodeAudioData(bin.buffer); S.vozNome = 'demo';
+    $('stVoz').innerHTML = `<span class="ok">✓ narração da demo · ${S.voz.duration.toFixed(1)} s · alinhada</span>`; } catch (e) { S.voz = null; }
+  usarRoteiro(JSON.parse(JSON.stringify(DEMO.roteiro)), 'demo');
+};
+$('inVoz').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try { S.voz = await AC().decodeAudioData(await f.arrayBuffer()); S.vozNome = f.name; await rebuild();
+    const n = S.words ? S.words.length : 0; $('stVoz').innerHTML = `<span class="ok">✓ ${f.name} · ${S.voz.duration.toFixed(1)} s · ${n} palavras alinhadas à voz</span>`; }
+  catch (err) { $('stVoz').innerHTML = `<span class="bad">Não consegui ler o áudio: ${err.message}</span>`; }
+};
+$('inMidia').onchange = async e => {
+  for (const f of e.target.files) { const url = URL.createObjectURL(f);
+    try { if (f.type.startsWith('video')) S.videos[f.name] = await loadVideo(url); else S.images[f.name] = await loadImage(url); } catch (err) { console.warn(f.name, err); } }
+  await rebuild(false);
+};
+$('inMus').onchange = async e => { const f = e.target.files[0]; if (!f) return;
+  try { S.mus = await AC().decodeAudioData(await f.arrayBuffer()); $('stMus').innerHTML = `<span class="ok">✓ ${f.name}</span> · abaixa sozinha quando o Sam fala`; await rebuild(); } catch (err) { $('stMus').innerHTML = `<span class="bad">${err.message}</span>`; } };
+$('volMus').onchange = () => { if (S.mus) rebuild(); };
+$('btnOuvir').onclick = async () => { const a = AC(); await a.resume(); let t = a.currentTime + 0.1;
+  for (const n of SamAudio.SFX) { const d = SamAudio.synth(n, a.sampleRate), b = a.createBuffer(1, d.length, a.sampleRate); b.copyToChannel(d, 0); const s = a.createBufferSource(); s.buffer = b; const g = a.createGain(); g.gain.value = 0.5; s.connect(g); g.connect(a.destination); s.start(t); t += d.length / a.sampleRate + 0.35; } };
+$('btnStill').onclick = () => { S.exporting = true; draw(); S.exporting = false; cv.toBlob(async b => { draw(); const r = await saveFile(nomeArquivo('png').replace('.png', `-${S.t.toFixed(1)}s.png`), b); $('stExport').textContent = r === 'saved' ? 'Quadro salvo.' : 'Quadro não salvo (' + r + ').'; }, 'image/png'); };
+$('btnJson').onclick = async () => { const r = await saveFile(nomeArquivo('json'), new Blob([JSON.stringify(S.ep, null, 1)], { type: 'application/json' })); $('stExport').textContent = r === 'saved' ? 'JSON salvo.' : 'JSON não salvo (' + r + ').'; };
+$('btnWav').onclick = async () => { if (!S.mix) return; const r = await saveFile(nomeArquivo('wav'), SamAudio.toWav(S.mix)); $('stExport').textContent = r === 'saved' ? `Áudio salvo (${S.mix.lufs.toFixed(1)} LUFS).` : 'Áudio não salvo (' + r + ').'; };
+
+// exportação MP4 quadro a quadro (WebCodecs + mp4-muxer); sem WebCodecs, grava em tempo real
+$('btnExport').onclick = async () => {
+  if (!S.engine) return; pause();
+  if (!window.VideoEncoder || !window.Mp4Muxer) return exportarTempoReal();
+  const W = cv.width, H = cv.height, fps = S.engine.fps, n = Math.round(S.engine.duration * fps);
+  let vcodec = null; for (const c of ['avc1.640028', 'avc1.4d0028', 'avc1.42e028']) { try { if ((await VideoEncoder.isConfigSupported({ codec: c, width: W, height: H, bitrate: 14e6, framerate: fps })).supported) { vcodec = c; break; } } catch (e) {} }
+  if (!vcodec) return exportarTempoReal();
+  let acodec = 'opus'; try { if ((await AudioEncoder.isConfigSupported({ codec: 'mp4a.40.2', sampleRate: 48000, numberOfChannels: 2, bitrate: 192000 })).supported) acodec = 'mp4a.40.2'; } catch (e) {}
+  const mux = new Mp4Muxer.Muxer({ target: new Mp4Muxer.ArrayBufferTarget(), video: { codec: 'avc', width: W, height: H, frameRate: fps }, audio: S.mix ? { codec: acodec === 'opus' ? 'opus' : 'aac', numberOfChannels: 2, sampleRate: 48000 } : undefined, fastStart: 'in-memory', firstTimestampBehavior: 'offset' });
+  let fail = null; const venc = new VideoEncoder({ output: (c, m) => mux.addVideoChunk(c, m), error: e => (fail = e) });
+  venc.configure({ codec: vcodec, width: W, height: H, bitrate: 14e6, framerate: fps, latencyMode: 'quality' });
+  $('btnExport').disabled = true; $('prog').style.display = 'block'; S.exporting = true; const tStart = performance.now();
+  for (let i = 0; i < n && !fail; i++) {
+    const t = i / fps; await seekVideos(t); S.engine.renderAt(t);
+    const fr = new VideoFrame(cv, { timestamp: Math.round(i * 1e6 / fps), duration: Math.round(1e6 / fps) }); venc.encode(fr, { keyFrame: i % (fps * 2) === 0 }); fr.close();
+    while (venc.encodeQueueSize > 8) await new Promise(r => setTimeout(r, 2));
+    if (i % 6 === 0) { $('prog').value = i / n; const el = (performance.now() - tStart) / 1000, rest = el / Math.max(1, i) * (n - i); $('stExport').textContent = `Quadro ${i}/${n} · faltam ~${Math.ceil(rest)} s`; await new Promise(r => setTimeout(r, 0)); }
+  }
+  await venc.flush();
+  if (S.mix && !fail) {
+    const aenc = new AudioEncoder({ output: (c, m) => mux.addAudioChunk(c, m), error: e => (fail = e) });
+    aenc.configure({ codec: acodec, sampleRate: 48000, numberOfChannels: 2, bitrate: 192000 });
+    const L = S.mix.getChannelData(0), R = S.mix.getChannelData(1), total = Math.min(S.mix.length, Math.round(S.engine.duration * 48000));
+    for (let s0 = 0; s0 < total; s0 += 4800) { const len = Math.min(4800, total - s0), data = new Float32Array(len * 2); data.set(L.subarray(s0, s0 + len), 0); data.set(R.subarray(s0, s0 + len), len);
+      const ad = new AudioData({ format: 'f32-planar', sampleRate: 48000, numberOfFrames: len, numberOfChannels: 2, timestamp: Math.round(s0 / 48000 * 1e6), data }); aenc.encode(ad); ad.close(); }
+    await aenc.flush();
+  }
+  S.exporting = false; draw(); $('prog').style.display = 'none'; $('btnExport').disabled = false;
+  if (fail) { $('stExport').innerHTML = `<span class="bad">Falhou: ${fail.message}</span>`; return; }
+  mux.finalize(); const r = await saveFile(nomeArquivo('mp4'), new Blob([mux.target.buffer], { type: 'video/mp4' }));
+  $('stExport').textContent = r === 'saved' ? `Vídeo exportado: ${nomeArquivo('mp4')} (${acodec === 'opus' ? 'H.264 + Opus' : 'H.264 + AAC'})` : `Vídeo não salvo (${r}).`;
+};
+async function exportarTempoReal() {
+  const a = AC(); await a.resume(); const fps = S.engine.fps, dur = S.engine.duration;
+  const stream = cv.captureStream(fps), dest = a.createMediaStreamDestination(); let s2 = null; if (S.mix) { s2 = a.createBufferSource(); s2.buffer = S.mix; s2.connect(dest); }
+  const ms = new MediaStream([...stream.getVideoTracks(), ...dest.stream.getAudioTracks()]);
+  const mime = ['video/mp4;codecs="avc1.640028,mp4a.40.2"', 'video/mp4', 'video/webm;codecs="vp9,opus"', 'video/webm'].find(t => window.MediaRecorder && MediaRecorder.isTypeSupported(t));
+  if (!mime) { $('stExport').innerHTML = '<span class="bad">Este navegador não grava vídeo. Use o Chrome no computador.</span>'; return; }
+  const rec = new MediaRecorder(ms, { mimeType: mime, videoBitsPerSecond: 16e6, audioBitsPerSecond: 192000 }), chunks = []; rec.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+  const stopped = new Promise(r => (rec.onstop = r)); $('btnExport').disabled = true; $('prog').style.display = 'block'; $('stExport').textContent = 'Gravando em tempo real… deixe a aba visível.';
+  S.exporting = true; S.t = 0; draw(); rec.start(500); const start = a.currentTime + 0.15; if (s2) s2.start(start);
+  await new Promise(res => { (function step() { const t = a.currentTime - start; if (t >= dur) return res(); S.t = Math.max(0, t); syncVideos(S.t, true); draw(); $('prog').value = t / dur; requestAnimationFrame(step); })(); });
+  draw(); await new Promise(r => setTimeout(r, 300)); rec.stop(); await stopped; S.exporting = false; draw();
+  const r = await saveFile(nomeArquivo(mime.startsWith('video/mp4') ? 'mp4' : 'webm'), new Blob(chunks, { type: mime.split(';')[0] }));
+  $('prog').style.display = 'none'; $('btnExport').disabled = false; $('stExport').textContent = r === 'saved' ? 'Vídeo exportado.' : `Vídeo não salvo (${r}).`;
+}
+// abre roteiro vindo do link (#r=…) — é assim que a versão do Grok passa o roteiro para cá
+(async () => {
+  const h = location.hash.match(/[#&]r=([^&]+)/);
+  if (h) { try { await usarRoteiro(await desempacotar(h[1]), 'link'); return; } catch (e) { $('stJson').innerHTML = `<span class="bad">Link com roteiro inválido: ${e.message}</span>`; } }
+  if (window.__ROTEIRO__) { usarRoteiro(window.__ROTEIRO__, 'Grok'); return; }
+  $('btnDemo').click();
+})();
+window.addEventListener('message', e => { if (e.data && e.data.samRoteiro) usarRoteiro(e.data.samRoteiro, 'Grok'); });
+</script>
+</body>
+</html>
